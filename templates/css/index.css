@@ -1,0 +1,109 @@
+/* Estilos para el contenedor del carrusel */
+#carrusel-container {
+  width: 100%;
+  max-width: 1600px;
+  max-height: 650px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+/* Estilos para el carrusel interno */
+#carrusel-container .carousel-inner {
+  position: relative;
+}
+
+/* Establece la transición para las imágenes del carrusel */
+#carrusel-container .carousel-item {
+  transition: opacity 0.4s ease-in-out; /* Transición de opacidad */
+}
+
+/* Establece la opacidad inicial de las imágenes */
+#carrusel-container .carousel-item {
+  opacity: 0;
+}
+
+/* Establece la opacidad de la imagen activa */
+#carrusel-container .carousel-item.active {
+  opacity: 1;
+}
+
+/* Estilos para el listado de imágenes */
+#image-list {
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 10px;
+}
+
+#image-list img {
+  width: 450px;
+  height: auto;
+  margin-right: 5px;
+  margin-left: 5px;
+  aspect-ratio: 16 / 9;
+}
+
+#image-list a {
+  display: inline-block;
+  text-decoration: none;
+}
+
+
+      h2 {
+        padding: 30px;
+      }
+
+      section{
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    min-height: 100vh;
+    background: linear-gradient(to bottom,#f1f4f9,#6c8ca5);
+    position: relative; /* Añade posición relativa para que los elementos absolutos dentro de la sección se posicionen correctamente */
+    overflow: hidden; /* Asegura que el contenido no se desborde */
+}
+
+
+.image-list {
+  display: flex;
+  justify-content: start;
+}
+
+.image-list a {
+  display: block;
+  position: relative;
+  margin-right: 20px;
+  overflow: hidden;
+}
+
+.image-list img {
+  width: 200px;
+  height: auto;
+  transition: transform 0.3s ease-in-out, filter 0.3s ease;
+}
+
+.image-list a:hover img {
+  transform: scale(1.1);
+  filter: brightness(80%);
+}
+
+.image-description {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  box-sizing: border-box;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.image-list a:hover .image-description {
+  opacity: 1;
+}
+
+
+.style-gallery{
+  margin-left: 3vw;
+}
