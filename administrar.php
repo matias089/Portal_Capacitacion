@@ -279,7 +279,7 @@ if (isset($_GET['mensaje'])) {
                         <label class="form-check-label" for="select-all-checkbox">Seleccionar todo</label>
                       </div>
                     <button class="btn btn-secondary" type="button" id="dropdownNombre" aria-expanded="false">
-                        Checkbox
+                        Seleccionado(s)
                     </button></th> <!-- Nueva columna de checkbox -->
                 </tr>
               </thead>

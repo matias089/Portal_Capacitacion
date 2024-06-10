@@ -86,6 +86,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         th {
             background-color: #f2f2f2;
         }
+
+        /*   //////////// */
     </style>
 </head>
 <body>

@@ -165,11 +165,7 @@ if (!$result) {
 	  echo "</a>";
 	}
     }
-
-
-    
     ?>
-    
   </div>
 
   <div>
@@ -191,7 +187,6 @@ if (!$result) {
       <div class="image-description">Recursos Humanos</div>
     </a>
   </div>
-
 
   <script>
     // Cuando el carrusel cambia de diapositiva
@@ -232,12 +227,9 @@ if (!$result) {
         }, inactiveTime);
       });
     });
-
-    
   </script>
 
 </body>
-
 
 </html>
 
