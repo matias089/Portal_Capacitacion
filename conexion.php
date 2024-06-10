@@ -5,17 +5,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-/*include('/var/www/html/Portal_Capacitacion/db/db.php');*/
-
 include('db/db.php');
-
-/*
-$host = 'localhost';
-$port = '5432';
-$dbname = 'Nevada_Learning';
-$user = 'postgres';
-$password = 'NEVada--3621';
-*/
 
 // Conexión a la base de datos
 $conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
@@ -30,8 +20,8 @@ if (!$conn) {
 $rut = $_POST['rut'];
 $password = $_POST['password'];
 
-// Consulta para verificar las credenciales del usuario
-$query = "SELECT * FROM usuarios WHERE rut='$rut' AND contrasena='$password'";
+// Consulta para verificar las credenciales del usuario y obtener su nombre
+$query = "SELECT rut, nombre, tipo_usuario, empresa FROM usuarios WHERE rut='$rut' AND contrasena='$password'";
 $result = pg_query($conn, $query);
 
 // Verificar si se encontraron resultados
@@ -42,8 +32,9 @@ if (pg_num_rows($result) > 0) {
 
     $usuario = pg_fetch_assoc($result);
     $_SESSION['tipo_usuario'] = $usuario['tipo_usuario'];
-    $_SESSION['empresa'] = $usuario['empresa']; // Asegúrate de que el campo en la tabla se llame 'empresa'
+    $_SESSION['empresa'] = $usuario['empresa'];
     $_SESSION['rut'] = $usuario['rut'];
+    $_SESSION['nombre'] = $usuario['nombre']; // Se agrega el nombre del usuario a la sesión
     header('Location: index.php');
 } else {
     // Credenciales inválidas, redirigir al usuario de vuelta al formulario de login

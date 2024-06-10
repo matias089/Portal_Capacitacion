@@ -280,12 +280,11 @@ if (isset($_GET['mensaje'])) {
                       </div>
                     <button class="btn btn-secondary" type="button" id="dropdownNombre" aria-expanded="false">
                         Seleccionado(s)
-                    </button></th> <!-- Nueva columna de checkbox -->
+                    </button></th>
                 </tr>
               </thead>
               <tbody id="tablaUsuarios">
                 <?php
-                // Iterar sobre los resultados y poblar la tabla
                 while ($fila = pg_fetch_assoc($consulta)) {
                   echo "<tr>";
                   echo "<td>" . $fila['empresa'] . "</td>";
@@ -326,7 +325,6 @@ if (isset($_GET['mensaje'])) {
           </nav>-->
 
           <?php
-          // Liberar el resultado y cerrar la conexión
           pg_free_result($consulta);
           pg_close($conn);
           ?>

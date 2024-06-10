@@ -47,6 +47,9 @@ if ($empresa_usuario == 'Savisa') {
         <a class="navbar-brand" href="#">
             <img src="<?php echo $imagen_empresa; ?>" alt="Logo de la Empresa" width="50" height="50" class="d-inline-block align-top">
         </a>
+        <li class="nav-item">
+            <a class="nav-link" href="/Portal_Capacitacion/datos_usuario.php">Ver datos personales</a>
+        </li>
         
         <!-- Botón de hamburguesa para dispositivos móviles -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,9 +61,6 @@ if ($empresa_usuario == 'Savisa') {
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="/Portal_Capacitacion/index.php">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/Portal_Capacitacion/datos_usuario.php">Ver datos personales</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/Portal_Capacitacion/notificaciones.php">Notificaciones</a>
@@ -77,6 +77,9 @@ if ($empresa_usuario == 'Savisa') {
                     <span class="nav-link disabled">Usuario Regular</span>
                 </li>
                 <?php endif; ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Portal_Capacitacion/certificade_generator.php">Certificade_Generator</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/Portal_Capacitacion/logout.php">Cerrar Sesión</a>
                 </li>

@@ -65,69 +65,8 @@ $result = pg_query($db, $sql);
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
     <title>Notificaciones</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/Portal_Capacitacion/templates/css/notificaciones.css">
     <link rel="stylesheet" href="/Portal_Capacitacion/templates/css/crear_usuario.css">
-    <style>
-        .container-div1 {
-            width: 60vw;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .admin-form {
-            margin: 20px 0;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-        /* Responsive typography */
-        h2 {
-            font-size: 5vw;
-        }
-        th, td {
-            font-size: 4vw;
-        }
-        input[type="submit"] {
-            font-size: 4vw;
-        }
-        /* Media queries for larger screens */
-        @media (min-width: 600px) {
-            h2 {
-                font-size: 3vw;
-            }
-            th, td {
-                font-size: 2.5vw;
-            }
-            input[type="submit"] {
-                font-size: 2.5vw;
-            }
-        }
-        @media (min-width: 1024px) {
-            h2 {
-                font-size: 2vw;
-            }
-            th, td {
-                font-size: 1.2vw;
-            }
-            input[type="submit"] {
-                font-size: 1.2vw;
-            }
-        }
-    </style>
 </head>
 <body>
 

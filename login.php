@@ -91,7 +91,6 @@
           </section>
           <!--<script src="login.js"></script>-->
   <script src="/Portal_Capacitacion/templates/js/login_validate.js">
-      
   </script>  
 
 </body>
