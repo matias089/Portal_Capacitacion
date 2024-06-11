@@ -2,6 +2,7 @@
 
 include 'check_password.php';
 include 'db/db.php';
+include 'error_control.php';
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -61,14 +62,23 @@ $resultado = pg_query($conn, $consulta);
 
 // Verifica si la consulta se ejecutó correctamente
 if ($resultado) {
-    // Obtiene el nombre del curso
-    $fila = pg_fetch_assoc($resultado);
-    $nombre_curso = $fila['nombre_cur'];
+    // Intenta obtener el nombre del curso y maneja cualquier error
+    try {
+        $fila = pg_fetch_assoc($resultado);
+        if (!$fila || !isset($fila['nombre_cur'])) {
+            throw new Exception("No se encontró el curso.");
+        }
+        $nombre_curso = $fila['nombre_cur'];
+    } catch (Exception $e) {
+        header("Location: 404.php");
+        exit();
+    }
 } else {
-    // Si la consulta falla, muestra un mensaje de error
-    echo "Error al obtener el nombre del curso.";
+    // Redirige a 404.php si la consulta falla
+    header("Location: 404.php");
     exit();
 }
+
 
 
 
@@ -147,23 +157,9 @@ $boton_descarga_deshabilitado = ($estado_examen === 'Aprobado');
 </div>
     </section>
 
-    <script>
-        document.getElementById("realizarExamenButton").addEventListener("click", function() {
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "templates/preguntas/actualizar_estado.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        console.log("Estado actualizado correctamente");
-                    } else {
-                        console.error("Error al actualizar el estado:", xhr.statusText);
-                    }
-                }
-            };
-            xhr.send("rut=<?php echo $rut_del_usuario; ?>");
-        });
-</script>
+    <script src="/Portal_Capacitacion/templates/js/vd1.js">
+  </script>  
+
 
 </body>
 </html>

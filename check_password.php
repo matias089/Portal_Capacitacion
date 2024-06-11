@@ -109,17 +109,7 @@ pg_close($conexion);
 ?>
 </body>
 <!-- Scripts de JavaScript de Bootstrap (opcional, solo si planeas usar componentes interactivos de Bootstrap) -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Agregar un listener para el evento de cierre de la alerta
-    var closeButton = document.getElementById('closeButton');
-    closeButton.addEventListener('click', function() {
-        // Mostrar mensaje antes de redirigir
-        alert("Se cerrará tu sesión debido a que tu contraseña ha expirado.");
-        // Redirigir al usuario a logout.php
-        window.location.href = 'logout.php';
-    });
-});
-</script>
+<script src="/Portal_Capacitacion/templates/js/check_password.js">
+  </script>  
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-Atj8AqpiyZgywYrvKRb8+TRyS5fz5UOCZKZ8Qolcb5bo1T/QQ0koVJ/1Cb9tz+X9" crossorigin="anonymous"></script>
 </html>
