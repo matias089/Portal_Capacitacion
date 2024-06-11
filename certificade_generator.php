@@ -1,6 +1,7 @@
 <?php
 // Inicia la sesión si no está iniciada
 session_start();
+include 'error_control.php';
 
 // Verifica si el usuario está logueado
 if (!isset($_SESSION['tipo_usuario'])) {
@@ -8,6 +9,7 @@ if (!isset($_SESSION['tipo_usuario'])) {
     header("Location: portada.html");
     exit(); // Es importante salir del script después de redirigir
 }
+
 
 // Incluye la biblioteca FPDF
 require(__DIR__ . '/fpdf/fpdf.php');

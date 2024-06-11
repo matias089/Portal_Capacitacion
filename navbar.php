@@ -1,7 +1,7 @@
 <?php
 
 include('db/db.php');
-
+include 'error_control.php';
 
 // Verifica si la sesión no está iniciada y, de ser así, la inicia
 if (session_status() == PHP_SESSION_NONE) {

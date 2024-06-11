@@ -1,6 +1,6 @@
 <?php
 require 'vendor/autoload.php'; // Carga el autoload de Composer para PHPMailer
-
+include 'error_control.php';
 // Verifica si se recibió el RUT del formulario
 if (isset($_POST['rut'])) {
     $rut = $_POST['rut'];

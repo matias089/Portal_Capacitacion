@@ -1,6 +1,7 @@
 <?php
 // Iniciar sesión si no está iniciada
 session_start();
+include 'error_control.php';
 
 // Verificar si el usuario está logueado
 if (!isset($_SESSION['rut'])) {

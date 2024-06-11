@@ -1,4 +1,6 @@
 <?php
+
+include 'error_control.php';
 // Verificar si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificar si se han seleccionado ruts

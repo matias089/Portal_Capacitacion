@@ -10,24 +10,9 @@
 </head>
 <body>
 
-    <?php    
-
-/*
-$host = 'localhost';
-$port = '5432';
-$dbname = 'Nevada_Learning';
-$user = 'postgres';
-$password = 'NEVada--3621';
-
-
-$host = 'localhost';
-$port = '5432';
-$dbname = 'PortalCapacitacion';
-$user = 'postgres';
-$password = '1234';
-*/
-//include('/var/www/html/Portal_Capacitacion/db/db.php');
+<?php    
 include 'db/db.php';
+include 'error_control.php';
 
 // Conexión a la base de datos
 $conexion = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");

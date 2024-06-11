@@ -1,11 +1,13 @@
 <?php
 session_start();
 
+include 'error_control.php';
 // Verifica si la sesión está iniciada
 if (!isset($_SESSION['rut'])) {
     header("Location: pwreset.php");
     exit();
 }
+
 
 $mensaje_html = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

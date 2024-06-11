@@ -2,6 +2,8 @@
 <?php
 //echo $rut;
 session_start();
+
+include 'error_control.php';
 // Verificar si el usuario está intentando enviar el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificar si se recibió el código ingresado por el usuario

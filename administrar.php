@@ -5,6 +5,7 @@ session_start();
 // Incluye el contenido del navbar
 include 'navbar.php';
 include 'check_password.php';
+include 'error_control.php';
 // Verifica si el usuario está logueado
 if (!isset($_SESSION['tipo_usuario'])) {
     // Si el usuario no está logueado, redirige a la página de login

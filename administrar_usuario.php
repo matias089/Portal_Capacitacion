@@ -1,6 +1,7 @@
 <?php
 // Inicia la sesión si no está iniciada
 session_start();
+include 'error_control.php';
 
 // Verifica si el usuario está logueado
 if (!isset($_SESSION['tipo_usuario'])) {
