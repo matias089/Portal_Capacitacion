@@ -78,7 +78,7 @@ if ($empresa_usuario == 'Savisa') {
                 </li>
                 <?php endif; ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Portal_Capacitacion/certificade_generator.php">Certificade_Generator</a>
+                    <a class="nav-link" href="/Portal_Capacitacion/cursos_aprobados.php">Ver Cursos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/Portal_Capacitacion/logout.php">Cerrar Sesión</a>

@@ -2,6 +2,7 @@
 // Inicia la sesión si no está iniciada
 session_start();
 include 'error_control.php';
+include 'db/db.php'; // Incluye los datos de conexión a la base de datos
 
 // Verifica si el usuario está logueado
 if (!isset($_SESSION['tipo_usuario'])) {
@@ -9,10 +10,6 @@ if (!isset($_SESSION['tipo_usuario'])) {
     header("Location: portada.html");
     exit(); // Es importante salir del script después de redirigir
 }
-
-
-// Incluye la biblioteca FPDF
-require(__DIR__ . '/fpdf/fpdf.php');
 
 // Verifica si 'nombre' está establecido en la sesión
 if (!isset($_SESSION['nombre'])) {
@@ -24,10 +21,32 @@ if (!isset($_SESSION['rut'])) {
     die('Error: El RUT del usuario no está establecido en la sesión.');
 }
 
-// Verifica el tipo de usuario y obtiene sus datos
+// Obtiene el nombre del curso desde la URL
+if (!isset($_GET['nombre_cur'])) {
+    die('Error: El nombre del curso no está especificado.');
+}
+
+$nombre_curso = $_GET['nombre_cur'];
+
+// Conexión a la base de datos
+$conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
+if (!$conn) {
+    die("Error de conexión: " . pg_last_error());
+}
+
+// Verifica si el curso está aprobado para el usuario
 $rut_usuario = $_SESSION['rut'];
-$nombre_usuario = $_SESSION['nombre']; // Asegúrate de que el nombre del usuario esté almacenado en la sesión
-$nombre_curso = "Nombre del Curso"; // Reemplaza esto con el nombre del curso real que el usuario aprobó
+$query = "SELECT * FROM estado_examen WHERE rut = '$rut_usuario' AND nombre_cur = '$nombre_curso' AND estado = 'Aprobado'";
+$result = pg_query($conn, $query);
+if (!$result || pg_num_rows($result) == 0) {
+    die('Error: El curso no está aprobado para este usuario.');
+}
+
+// Obtiene el nombre del usuario desde la sesión
+$nombre_usuario = $_SESSION['nombre'];
+
+// Incluye la biblioteca FPDF
+require(__DIR__ . '/fpdf/fpdf.php');
 
 class PDF extends FPDF
 {
@@ -78,4 +97,8 @@ $pdf->Certificado($nombre_usuario, $rut_usuario, $nombre_curso);
 
 // Generar la salida del PDF
 $pdf->Output('I', 'certificado_aprobacion.pdf');
+
+// Cierra la conexión a la base de datos
+pg_free_result($result);
+pg_close($conn);
 ?>

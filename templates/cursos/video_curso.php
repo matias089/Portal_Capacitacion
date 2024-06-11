@@ -1,6 +1,7 @@
 <?php
 // Inicia la sesión si no está iniciada
 session_start();
+include '../../error_control.php';
 
 // Verifica si se ha pasado un parámetro de ID en la URL
 if(isset($_GET['id'])) {

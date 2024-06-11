@@ -1,6 +1,7 @@
 <?php
 
 include '../../db/db.php';
+include '../../error_control.php';
 
 // Conexión a la base de datos
 $db = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");

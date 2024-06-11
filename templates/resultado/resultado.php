@@ -1,6 +1,7 @@
 <?php
 
 include('../../navbar.php');
+include('../../error_control.php');
 
 
 if (session_status() === PHP_SESSION_NONE) {
