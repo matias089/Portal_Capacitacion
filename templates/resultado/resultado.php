@@ -1,7 +1,8 @@
 <?php
 
 include('../../navbar.php');
-include('../../error_control.php');
+include ('../../error_control.php');
+
 
 
 if (session_status() === PHP_SESSION_NONE) {
@@ -16,6 +17,7 @@ if (!isset($_SESSION['rut'])) {
 }
 
 $rut_del_usuario = $_SESSION['rut'];
+$examen_id = $_GET['examen_id'];
 
 include '../../db/db.php';
 
@@ -36,7 +38,7 @@ if (isset($_GET['resultado'])) {
     $result = pg_query($db, $sql);
 
   
-    $total_preguntas = "SELECT COUNT(*) FROM preguntas WHERE examen_id = 1";
+    $total_preguntas = "SELECT COUNT(*) FROM preguntas WHERE examen_id = $examen_id";
     $result_total_preguntas = pg_query($db, $total_preguntas);
 
     // Obtener el número total de preguntas

@@ -24,18 +24,26 @@ if(isset($_GET['id'])) {
     echo "Error: No se proporcionó un ID válido";
 }
 
-// Determina qué video mostrar según el ID del curso
-if($curso_id == 1) {
-    $video_src = "vd1_prueba.mp4";
-} elseif($curso_id == 2) {
-    $video_src = "vd2_prueba.mp4";
-} elseif($curso_id > 2) {
-    $video_src = "video_prueba.mp4";
-} else {
-    // Si el ID del curso no coincide con ninguna opción válida, puedes mostrar un mensaje de error o manejarlo de acuerdo a tus necesidades
-    echo "No se encontró un video para el ID del curso proporcionado.";
-    exit; // Termina la ejecución del script
-}
+    // Determina qué video mostrar según el ID del curso
+    if($curso_id == 1) {
+        $video_src = "../FilesWeb/preview_vd1.mp4";
+    } elseif($curso_id == 2) {
+        $video_src = "../FilesWeb/preview_vd2.mp4";
+    } elseif($curso_id == 3) {
+        $video_src = "../FilesWeb/preview_vd3.mp4";
+    } elseif($curso_id == 4) {
+        $video_src = "../FilesWeb/preview_vd4.mp4";
+    } elseif($curso_id == 5) {
+        $video_src = "../FilesWeb/preview_vdIncapacidad.mp4";
+    } elseif($curso_id == 6) {
+        $video_src = "../FilesWeb/preview_vd6.mp4";
+    } elseif($curso_id > 6) {
+        $video_src = "../FilesWeb/video_prueba.mp4";
+    } else {
+        // Si el ID del curso no coincide con ninguna opción válida, puedes mostrar un mensaje de error o manejarlo de acuerdo a tus necesidades
+        echo "No se encontró un video para el ID del curso proporcionado.";
+        exit; // Termina la ejecución del script
+    }
 
 $rut_del_usuario = $_SESSION['rut'];
 

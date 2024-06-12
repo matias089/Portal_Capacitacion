@@ -1,7 +1,8 @@
 <?php
 
 include('../../navbar.php');
-include('../../error_control.php');
+include ('../../error_control.php');
+
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -155,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
     // Redirigir al usuario a la página de resultado
-    header("Location: ../resultado/resultado.php?resultado=$resultado");
+    header("Location: ../resultado/resultado.php?resultado=$resultado&examen_id=$id_examen");
 
     exit();
 

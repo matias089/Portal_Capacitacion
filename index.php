@@ -176,8 +176,8 @@ if (!$result) {
 
     <div id="image-list" class="image-list" style="margin-left: 30px;">
     <a href="/Portal_Capacitacion/templates/cursos/video_curso.php?id=4">
-      <img src="/Portal_Capacitacion/templates/img/ProcesoRecursoHumano.png" alt="Imagen 4">
-      <div class="image-description">Recursos Humanos</div>
+      <img src="/Portal_Capacitacion/templates/img/usoManejoExtintores.png" alt="Imagen 4">
+      <div class="image-description">Uso y Manejo de extintores</div>
     </a>
     <a href="/Portal_Capacitacion/templates/cursos/video_curso.php?id=5">
       <img src="/Portal_Capacitacion/templates/img/GestionRecursoHumano.png" alt="Imagen 5">

@@ -1,7 +1,7 @@
 <?php
 // Inicia la sesión si no está iniciada
 session_start();
-include 'error_control.php';
+// include 'error_control.php';
 
 // Verifica si el usuario está logueado
 if (!isset($_SESSION['tipo_usuario'])) {
@@ -83,6 +83,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar'])) {
     <?php
 include('db/db.php');
 
+// Genera una contraseña aleatoria con los requisitos especificados
+function generarContrasenaAleatoria() {
+    $caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@,[*_-;?#$%&/()=';
+    $longitud = 12;
+    $contrasena = '';
+    
+    // Añade al menos un carácter de cada tipo
+    $contrasena .= substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 1);
+    $contrasena .= substr(str_shuffle('abcdefghijklmnopqrstuvwxyz'), 0, 1);
+    $contrasena .= substr(str_shuffle('0123456789'), 0, 1);
+    $contrasena .= substr(str_shuffle('@,[*_-;?#$%&/()='), 0, 1);
+    
+    // Completa la contraseña con caracteres aleatorios
+    $contrasena .= substr(str_shuffle($caracteres), 0, $longitud - 4);
+    
+    // Mezcla los caracteres para mayor aleatoriedad
+    $contrasena = str_shuffle($contrasena);
+    
+    return $contrasena;
+}
+
 // Verifica si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Conecta a la base de datos
@@ -108,6 +129,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Ejecuta la consulta SQL
     try {
+        $contrasena = generarContrasenaAleatoria();
+
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':rut', $rut);
         $stmt->bindParam(':contrasena', $contrasena);

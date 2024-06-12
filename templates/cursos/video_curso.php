@@ -25,7 +25,15 @@ if (!isset($_SESSION['tipo_usuario'])) {
       $video_src = "../FilesWeb/preview_vd1.mp4";
   } elseif($curso_id == 2) {
       $video_src = "../FilesWeb/preview_vd2.mp4";
-  } elseif($curso_id > 2) {
+  } elseif($curso_id == 3) {
+      $video_src = "../FilesWeb/preview_vd3.mp4";
+  } elseif($curso_id == 4) {
+      $video_src = "../FilesWeb/preview_vd4.mp4";
+  } elseif($curso_id == 5) {
+      $video_src = "../FilesWeb/preview_vdIncapacidad.mp4";
+  } elseif($curso_id == 6) {
+      $video_src = "../FilesWeb/preview_vd6.mp4";
+  } elseif($curso_id > 6) {
       $video_src = "../FilesWeb/video_prueba.mp4";
   } else {
       // Si el ID del curso no coincide con ninguna opción válida, puedes mostrar un mensaje de error o manejarlo de acuerdo a tus necesidades
