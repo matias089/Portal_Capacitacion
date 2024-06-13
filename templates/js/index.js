@@ -20,7 +20,7 @@
   
       //INACTIVIDAD
       let timer = null;
-      let inactiveTime = 10000; // 20 segundos
+      let inactiveTime = 200000; // 20 segundos
     
       $(document).ready(function() {
         timer = setTimeout(function() {
