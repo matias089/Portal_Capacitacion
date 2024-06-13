@@ -45,10 +45,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         try {
             $fecha_actual = date("Y-m-d H:i:s");
-            $new_password_hashed = password_hash($new_password1, PASSWORD_BCRYPT);
+
 
             $query = "UPDATE usuarios SET contrasena = $1, ultima_modificacion_contrasena = $2 WHERE rut = $3";
-            $result = pg_query_params($conn, $query, array($new_password_hashed, $fecha_actual, $rut));
+            $result = pg_query_params($conn, $query, array($new_password1, $fecha_actual, $rut));
 
             if ($result) {
                 $mensaje_html = "<div class='alert alert-success' role='alert'>La contraseña se actualizó correctamente.</div>";
