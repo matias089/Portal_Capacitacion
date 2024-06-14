@@ -1,7 +1,6 @@
 <?php
 
 include('../../navbar.php');
-include ('../../error_control.php');
 
 
 if (session_status() === PHP_SESSION_NONE) {
@@ -124,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $next_id = $next_id_row[0];
 
         // Preparar la consulta de inserción
-        $query_insert = "INSERT INTO estado_examen (id, estado, rut, nombre_cur) VALUES ($next_id, '$estado_examen', '$rut', 'Curso prevención de delitos')";
+        $query_insert = "INSERT INTO estado_examen (id, estado, rut, id_cur) VALUES ($next_id, '$estado_examen', '$rut', $id_examen)";
         $result_insert = pg_query($db, $query_insert);
 
         if (!$result_insert) {
@@ -133,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } else {
         // Si se encuentra un registro con el rut, actualizar el estado existente
-        $query_update = "UPDATE estado_examen SET estado = '$estado_examen' WHERE rut = '$rut'";
+        $query_update = "UPDATE OR INSERT estado_examen SET estado = '$estado_examen' WHERE rut = '$rut'";
         $result_update = pg_query($db, $query_update);
 
         if (!$result_update) {

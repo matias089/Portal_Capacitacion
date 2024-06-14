@@ -22,37 +22,28 @@ if(isset($_GET['id'])) {
 } else {
     // Si no se proporcionó un ID válido, puedes redirigir al usuario o mostrar un mensaje de error
     echo "Error: No se proporcionó un ID válido";
+    exit();
 }
 
-    // Determina qué video mostrar según el ID del curso
-    if($curso_id == 1) {
-        $video_src = "../FilesWeb/preview_vd1.mp4";
-    } elseif($curso_id == 2) {
-        $video_src = "../FilesWeb/preview_vd2.mp4";
-    } elseif($curso_id == 3) {
-        $video_src = "../FilesWeb/preview_vd3.mp4";
-    } elseif($curso_id == 4) {
-        $video_src = "../FilesWeb/preview_vd4.mp4";
-    } elseif($curso_id == 5) {
-        $video_src = "../FilesWeb/preview_vdIncapacidad.mp4";
-    } elseif($curso_id == 6) {
-        $video_src = "../FilesWeb/preview_vd6.mp4";
-    } elseif($curso_id > 6) {
-        $video_src = "../FilesWeb/video_prueba.mp4";
-    } else {
-        // Si el ID del curso no coincide con ninguna opción válida, puedes mostrar un mensaje de error o manejarlo de acuerdo a tus necesidades
-        echo "No se encontró un video para el ID del curso proporcionado.";
-        exit; // Termina la ejecución del script
-    }
+// Determina qué video mostrar según el ID del curso
+$videos = [
+    1 => "preview_vd1.mp4",
+    2 => "preview_vd2.mp4",
+    3 => "preview_vd3.mp4",
+    4 => "preview_vd4.mp4",
+    5 => "preview_vdIncapacidad.mp4",
+    6 => "preview_vd6.mp4"
+];
+
+$video_src = $videos[$curso_id] ?? "video_prueba.mp4";
 
 $rut_del_usuario = $_SESSION['rut'];
 
 $conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
 
 // Verificar si el usuario ha realizado el curso actual
-$curso_actual = "Curso prevención de delitos";
-$query_estado_examen = "SELECT * FROM estado_examen WHERE rut = $1 AND nombre_cur = $2";
-$resultado_estado_examen = pg_query_params($conn, $query_estado_examen, array($rut_del_usuario, $curso_actual));
+$query_estado_examen = "SELECT * FROM estado_examen WHERE rut = $1 AND id_cur = $2";
+$resultado_estado_examen = pg_query_params($conn, $query_estado_examen, array($rut_del_usuario, $curso_id));
 
 // Verificar si se encontraron resultados en la consulta
 if (pg_num_rows($resultado_estado_examen) > 0) {
@@ -63,10 +54,8 @@ if (pg_num_rows($resultado_estado_examen) > 0) {
 }
 
 // Prepara la consulta SQL para obtener el nombre del curso
-$consulta = "SELECT nombre_cur FROM cursos WHERE id_cur = $curso_id";
-
-// Ejecuta la consulta
-$resultado = pg_query($conn, $consulta);
+$consulta = "SELECT nombre_cur FROM cursos WHERE id_cur = $1";
+$resultado = pg_query_params($conn, $consulta, array($curso_id));
 
 // Verifica si la consulta se ejecutó correctamente
 if ($resultado) {
@@ -86,9 +75,6 @@ if ($resultado) {
     header("Location: 404.php");
     exit();
 }
-
-
-
 
 function obtener_clase_estado($estado_examen) {
     switch ($estado_examen) {
@@ -116,7 +102,6 @@ $boton_descarga_deshabilitado = ($estado_examen === 'Aprobado');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modelo prevención de delito</title>
     <link rel="stylesheet" href="/Portal_Capacitacion/templates/css/vd1.css">
-
 </head>
 
 <body>
@@ -133,41 +118,40 @@ $boton_descarga_deshabilitado = ($estado_examen === 'Aprobado');
                         </div>
                     </div>
                     <div class="estado-examen">
-                            <p>Estado del examen:</p>
-                            <span id="estado-examen" class="<?php echo obtener_clase_estado($estado_examen); ?>">
-                                <?php echo $estado_examen; ?>
-                            </span>
-                        </div>
+                        <p>Estado del examen:</p>
+                        <span id="estado-examen" class="<?php echo obtener_clase_estado($estado_examen); ?>">
+                            <?php echo $estado_examen; ?>
+                        </span>
+                    </div>
                 </div>
               
-<div class="form">
-    <div align="center">
-        <h2><?php echo $nombre_curso; ?></h2>
-    </div>
-    <div class="video-container">
-        <video controls class="video">
-            <source src="templates\FilesWeb\<?php echo $video_src; ?>" type="video/mp4">
-            Tu navegador no soporta el elemento de video.
-        </video>
-    </div>
-    <div class="inputBox">
-        <a href="/Portal_Capacitacion/templates/descarga/Curso_MPD.pdf" target="blank">
-            <input type="submit" value="Descargar contenido" id="pdfButton"/>
-        </a>
-            <?php if ($estado_examen === 'Aprobado'): ?>
-                <p>¡Ya aprobaste el examen, la opción de realizar examen está deshabilitada!</p>
-            <?php else: ?>
-                <a href="/Portal_Capacitacion/templates/preguntas/test.php?id_cur=<?php echo $curso_id; ?>" id="realizarExamenButton">
-                <input type="submit" value="Realizar examen" id="examButton"/>
-                </a>
-            <?php endif;?>
-    </div>
-</div>
+                <div class="form">
+                    <div align="center">
+                        <h2><?php echo $nombre_curso; ?></h2>
+                    </div>
+                    <div class="video-container">
+                        <video controls class="video">
+                            <source src="/Portal_Capacitacion/templates/FilesWeb/<?php echo $video_src; ?>" type="video/mp4">
+                            Tu navegador no soporta el elemento de video.
+                        </video>
+                    </div>
+                    <div class="inputBox">
+                        <a href="/Portal_Capacitacion/templates/descarga/Curso_MPD.pdf" target="blank">
+                            <input type="submit" value="Descargar contenido" id="pdfButton"/>
+                        </a>
+                        <?php if ($estado_examen === 'Aprobado'): ?>
+                            <p>¡Ya aprobaste el examen, la opción de realizar examen está deshabilitada!</p>
+                        <?php else: ?>
+                            <a href="/Portal_Capacitacion/templates/preguntas/test.php?id_cur=<?php echo $curso_id; ?>" id="realizarExamenButton">
+                                <input type="submit" value="Realizar examen" id="examButton"/>
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <script src="/Portal_Capacitacion/templates/js/vd1.js">
-  </script>  
-
-
+    <script src="/Portal_Capacitacion/templates/js/vd1.js"></script>  
 </body>
 </html>

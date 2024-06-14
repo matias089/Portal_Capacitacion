@@ -22,11 +22,11 @@ if (!isset($_SESSION['rut'])) {
 }
 
 // Obtiene el nombre del curso desde la URL
-if (!isset($_GET['nombre_cur'])) {
+if (!isset($_GET['id_cur'])) {
     die('Error: El nombre del curso no está especificado.');
 }
 
-$nombre_curso = $_GET['nombre_cur'];
+$id_cur = $_GET['id_cur'];
 
 // Conexión a la base de datos
 $conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
@@ -36,7 +36,7 @@ if (!$conn) {
 
 // Verifica si el curso está aprobado para el usuario
 $rut_usuario = $_SESSION['rut'];
-$query = "SELECT * FROM estado_examen WHERE rut = '$rut_usuario' AND nombre_cur = '$nombre_curso' AND estado = 'Aprobado'";
+$query = "SELECT * FROM estado_examen WHERE rut = '$rut_usuario' AND id_cur = '$id_cur' AND estado = 'Aprobado'";
 $result = pg_query($conn, $query);
 if (!$result || pg_num_rows($result) == 0) {
     die('Error: El curso no está aprobado para este usuario.');
@@ -66,12 +66,12 @@ class PDF extends FPDF
         $this->Cell(0, 10, 'Page ' . $this->PageNo(), 0, 0, 'C');
     }
 
-    function Certificado($nombre_usuario, $rut_usuario, $nombre_curso)
+    function Certificado($nombre_usuario, $rut_usuario, $id_cur)
     {
         // Añadir el título del curso
         $this->SetXY(20, 35);
         $this->SetFont('Arial', 'B', 24);
-        $this->Cell(0, 10, $nombre_curso, 0, 1, 'C');
+        $this->Cell(0, 10, $id_cur, 0, 1, 'C');
 
         // Añadir el nombre del usuario
         $this->SetXY(20, 83);
@@ -93,7 +93,7 @@ class PDF extends FPDF
 // Crear una instancia del PDF
 $pdf = new PDF('L', 'mm', array(900/3.78, 636/3.78)); // Ancho y alto del PDF en milímetros (900/3.78, 636/3.78)
 $pdf->AddPage();
-$pdf->Certificado($nombre_usuario, $rut_usuario, $nombre_curso);
+$pdf->Certificado($nombre_usuario, $rut_usuario, $id_cur);
 
 // Generar la salida del PDF
 $pdf->Output('I', 'certificado_aprobacion.pdf');

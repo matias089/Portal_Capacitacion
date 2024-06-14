@@ -1,7 +1,6 @@
 <?php
 
 include('../../navbar.php');
-include ('../../error_control.php');
 
 
 

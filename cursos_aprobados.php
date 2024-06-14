@@ -22,7 +22,7 @@ if (!$conn) {
 $rut = $_SESSION['rut']; // Asumiendo que el RUT del usuario está almacenado en la sesión
 
 // Realiza la consulta
-$query = "SELECT nombre_cur FROM estado_examen WHERE rut = '$rut' AND estado = 'Aprobado'";
+$query = "SELECT id_cur FROM estado_examen WHERE rut = '$rut' AND estado = 'Aprobado'";
 $result = pg_query($conn, $query);
 ?>
 
@@ -104,9 +104,9 @@ $result = pg_query($conn, $query);
                 // Itera sobre los resultados y muestra las filas en la tabla
                 while ($row = pg_fetch_assoc($result)) {
                     echo "<tr>
-                            <td>{$row['nombre_cur']}</td>
+                            <td>{$row['id_cur']}</td>
                             <td class='approved'>Aprobado</td>
-                            <td><a class='pdf-button' href='certificade_generator.php?nombre_cur={$row['nombre_cur']}'>PDF</a></td>
+                            <td><a class='pdf-button' href='certificade_generator.php?id_cur={$row['id_cur']}'>PDF</a></td>
                           </tr>";
                 }
             } else {

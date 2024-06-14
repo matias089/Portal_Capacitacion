@@ -1,7 +1,7 @@
 <?php
 // Inicia la sesión si no está iniciada
 session_start();
-include 'error_control.php';
+
 
 // Verifica si el usuario está logueado
 if (!isset($_SESSION['tipo_usuario'])) {
@@ -176,16 +176,16 @@ if (!$result) {
 
     <div id="image-list" class="image-list" style="margin-left: 30px;">
     <a href="/Portal_Capacitacion/templates/cursos/video_curso.php?id=4">
-      <img src="/Portal_Capacitacion/templates/img/usoManejoExtintores.png" alt="Imagen 4">
-      <div class="image-description">Uso y Manejo de extintores</div>
+      <img src="/Portal_Capacitacion/templates/img/AccidentesLaborales.png" alt="Imagen 4">
+      <div class="image-description">Accidentes laborales</div>
     </a>
     <a href="/Portal_Capacitacion/templates/cursos/video_curso.php?id=5">
-      <img src="/Portal_Capacitacion/templates/img/GestionRecursoHumano.png" alt="Imagen 5">
-      <div class="image-description">Gestion Recursos Humanos</div>
+      <img src="/Portal_Capacitacion/templates/img/IncapacidadesLaborales.png" alt="Imagen 5">
+      <div class="image-description">Incapacidades laborales</div>
     </a>
     <a href="/Portal_Capacitacion/templates/cursos/video_curso.php?id=6">
-      <img src="/Portal_Capacitacion/templates/img/RecursoHumano.png" alt="Imagen 6">
-      <div class="image-description">Recursos Humanos</div>
+      <img src="/Portal_Capacitacion/templates/img/Usoymanejodeextintores.png" alt="Imagen 6">
+      <div class="image-description">Uso y Manejo de extintores</div>
     </a>
   </div>
 

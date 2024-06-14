@@ -39,9 +39,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Obtener las respuestas del formulario
     $respuestas = $_POST['respuestas'];
     $rut = $_SESSION["rut"];
+    $id_cur = $variable_php; // Asegúrate de definir esta variable apropiadamente
 
-    $query_update_status = "UPDATE estado_examen SET estado = 'Pendiente' WHERE rut = '$rut'";
-    $result_update_status = pg_query($db, $query_update_status);
+    // Verificar si existe una fila con el rut
+    $query_check_rut = "SELECT 1 FROM estado_examen WHERE rut = '$rut' AND id_cur = $id_cur";
+    $result_check_rut = pg_query($db, $query_check_rut);
+
+    if (pg_num_rows($result_check_rut) > 0) {
+        // Si existe, actualizar el estado
+        $query_update_status = "UPDATE estado_examen SET estado = 'Pendiente' WHERE rut = '$rut' AND id_cur = $id_cur";
+        $result_update_status = pg_query($db, $query_update_status);
+    } else {
+        // Si no existe, insertar una nueva fila
+        $query_insert_status = "INSERT INTO estado_examen (estado, rut, id_cur) VALUES ('Pendiente', '$rut', '$id_cur')";
+        $result_insert_status = pg_query($db, $query_insert_status);
+    }
 
     // Guardar las respuestas en la tabla respuestas_usuario
     foreach ($respuestas as $id_pregunta => $respuesta) {
