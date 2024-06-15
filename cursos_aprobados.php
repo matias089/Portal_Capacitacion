@@ -12,20 +12,22 @@ if (!isset($_SESSION['tipo_usuario'])) {
 include 'db/db.php';
 include 'navbar.php';
 
- // Establece la conexión
+// Establece la conexión
 $conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
 if (!$conn) {
     die("Error de conexión: " . pg_last_error());
 }
- 
+
 // Obtiene el RUT del usuario logueado
 $rut = $_SESSION['rut']; // Asumiendo que el RUT del usuario está almacenado en la sesión
 
-// Realiza la consulta
-$query = "SELECT id_cur FROM estado_examen WHERE rut = '$rut' AND estado = 'Aprobado'";
+// Realiza la consulta con una unión entre las tablas estado_examen y cursos
+$query = "SELECT cursos.nombre_cur, estado_examen.id_cur 
+          FROM estado_examen 
+          JOIN cursos ON estado_examen.id_cur = cursos.id_cur 
+          WHERE estado_examen.rut = '$rut' AND estado_examen.estado = 'Aprobado'";
 $result = pg_query($conn, $query);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -104,7 +106,7 @@ $result = pg_query($conn, $query);
                 // Itera sobre los resultados y muestra las filas en la tabla
                 while ($row = pg_fetch_assoc($result)) {
                     echo "<tr>
-                            <td>{$row['id_cur']}</td>
+                            <td>{$row['nombre_cur']}</td>
                             <td class='approved'>Aprobado</td>
                             <td><a class='pdf-button' href='certificade_generator.php?id_cur={$row['id_cur']}'>PDF</a></td>
                           </tr>";

@@ -21,9 +21,9 @@ if (!isset($_SESSION['rut'])) {
     die('Error: El RUT del usuario no está establecido en la sesión.');
 }
 
-// Obtiene el nombre del curso desde la URL
+// Obtiene el id del curso desde la URL
 if (!isset($_GET['id_cur'])) {
-    die('Error: El nombre del curso no está especificado.');
+    die('Error: El id del curso no está especificado.');
 }
 
 $id_cur = $_GET['id_cur'];
@@ -41,6 +41,15 @@ $result = pg_query($conn, $query);
 if (!$result || pg_num_rows($result) == 0) {
     die('Error: El curso no está aprobado para este usuario.');
 }
+
+// Obtiene el nombre del curso desde la tabla cursos
+$query_curso = "SELECT nombre_cur FROM cursos WHERE id_cur = '$id_cur'";
+$result_curso = pg_query($conn, $query_curso);
+if (!$result_curso || pg_num_rows($result_curso) == 0) {
+    die('Error: No se encontró el curso especificado.');
+}
+$row_curso = pg_fetch_assoc($result_curso);
+$nombre_cur = $row_curso['nombre_cur'];
 
 // Obtiene el nombre del usuario desde la sesión
 $nombre_usuario = $_SESSION['nombre'];
@@ -66,12 +75,12 @@ class PDF extends FPDF
         $this->Cell(0, 10, 'Page ' . $this->PageNo(), 0, 0, 'C');
     }
 
-    function Certificado($nombre_usuario, $rut_usuario, $id_cur)
+    function Certificado($nombre_usuario, $rut_usuario, $nombre_cur)
     {
         // Añadir el título del curso
         $this->SetXY(20, 35);
         $this->SetFont('Arial', 'B', 24);
-        $this->Cell(0, 10, $id_cur, 0, 1, 'C');
+        $this->Cell(0, 10, $nombre_cur, 0, 1, 'C');
 
         // Añadir el nombre del usuario
         $this->SetXY(20, 83);
@@ -83,7 +92,7 @@ class PDF extends FPDF
         $this->SetFont('Arial', 'B', 18);
         $this->Cell(0, 10, $rut_usuario, 0, 1, 'C');
 
-        // Añadir el RUT del usuario
+        // Añadir el nombre de la organización
         $this->SetXY(-290, 120);
         $this->SetFont('Arial', 'B', 18);
         $this->Cell(0, 10, 'Nevada E-Learning', 0, 1, 'C');
@@ -93,12 +102,14 @@ class PDF extends FPDF
 // Crear una instancia del PDF
 $pdf = new PDF('L', 'mm', array(900/3.78, 636/3.78)); // Ancho y alto del PDF en milímetros (900/3.78, 636/3.78)
 $pdf->AddPage();
-$pdf->Certificado($nombre_usuario, $rut_usuario, $id_cur);
+$pdf->Certificado($nombre_usuario, $rut_usuario, $nombre_cur);
 
 // Generar la salida del PDF
 $pdf->Output('I', 'certificado_aprobacion.pdf');
 
 // Cierra la conexión a la base de datos
 pg_free_result($result);
+pg_free_result($result_curso);
 pg_close($conn);
 ?>
+
