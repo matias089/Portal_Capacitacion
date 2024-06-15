@@ -17,7 +17,7 @@ $conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$pa
 if (!$conn) {
     die("Error de conexión: " . pg_last_error());
 }
-
+ 
 // Obtiene el RUT del usuario logueado
 $rut = $_SESSION['rut']; // Asumiendo que el RUT del usuario está almacenado en la sesión
 

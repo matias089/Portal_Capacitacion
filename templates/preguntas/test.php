@@ -109,37 +109,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Verificar el resultado del examen y actualizar el estado en la base de datos
-    $query_select = "SELECT * FROM estado_examen WHERE rut = '$rut'";
-    $result_select = pg_query($db, $query_select);
 
-    if (pg_num_rows($result_select) == 0) {
-        // Si no se encuentra un registro con el rut, insertar uno nuevo
-
-        // Obtener el próximo valor de id para estado_examen
-        $query_next_id = "SELECT nextval(pg_get_serial_sequence('estado_examen', 'id'))";
-        $result_next_id = pg_query($db, $query_next_id);
-        $next_id_row = pg_fetch_row($result_next_id);
-        $next_id = $next_id_row[0];
-
-        // Preparar la consulta de inserción
-        $query_insert = "INSERT INTO estado_examen (id, estado, rut, id_cur) VALUES ($next_id, '$estado_examen', '$rut', $id_examen)";
-        $result_insert = pg_query($db, $query_insert);
-
-        if (!$result_insert) {
-            // Manejar el error en caso de falla en la inserción
-            echo "Error al insertar el registro: " . pg_last_error($db);
-        }
+    // Determinar el estado del examen
+    if ($resultado >= 8) {
+        $estado_examen = 'Aprobado';
     } else {
-        // Si se encuentra un registro con el rut, actualizar el estado existente
-        $query_update = "UPDATE OR INSERT estado_examen SET estado = '$estado_examen' WHERE rut = '$rut'";
-        $result_update = pg_query($db, $query_update);
-
-        if (!$result_update) {
-            // Manejar el error en caso de falla en la actualización
-            echo "Error al actualizar el registro: " . pg_last_error($db);
-        }
+        $estado_examen = 'Reprobado';
     }
+    
+// Verificar si existe un registro en estado_examen para el usuario y el curso
+$query_select = "SELECT * FROM estado_examen WHERE rut = '$rut' AND id_cur = $id_examen";
+$result_select = pg_query($db, $query_select);
+
+if (pg_num_rows($result_select) == 0) {
+    // Si no se encuentra un registro, insertar uno nuevo
+    $query_insert_estado = "INSERT INTO estado_examen (estado, rut, id_cur) VALUES ('$estado_examen', '$rut', $id_examen)";
+    $result_insert_estado = pg_query($db, $query_insert_estado);
+    if (!$result_insert_estado) {
+        echo "Error al insertar el registro: " . pg_last_error($db);
+    }
+} else {
+    // Si se encuentra un registro, actualizar el estado existente
+    $query_update_estado = "UPDATE estado_examen SET estado = '$estado_examen' WHERE rut = '$rut' AND id_cur = $id_examen";
+    $result_update_estado = pg_query($db, $query_update_estado);
+    if (!$result_update_estado) {
+        echo "Error al actualizar el registro: " . pg_last_error($db);
+    }
+}
+
 
     // Guardar las respuestas en la tabla respuestas_usuario
     foreach ($respuestas as $id_pregunta => $respuesta) {
