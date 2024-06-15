@@ -1,7 +1,6 @@
 <?php
 // Inicia la sesión si no está iniciada
 session_start();
-include 'error_control.php';
 include 'db/db.php'; // Incluye los datos de conexión a la base de datos
 
 // Verifica si el usuario está logueado
@@ -80,12 +79,14 @@ class PDF extends FPDF
         // Añadir el título del curso
         $this->SetXY(20, 35);
         $this->SetFont('Arial', 'B', 24);
-        $this->Cell(0, 10, $nombre_cur, 0, 1, 'C');
+        // Asegurarse de usar utf8_decode para manejar caracteres UTF-8
+        $this->Cell(0, 10, utf8_decode($nombre_cur), 0, 1, 'C');
 
         // Añadir el nombre del usuario
         $this->SetXY(20, 83);
         $this->SetFont('Arial', 'B', 40);
-        $this->Cell(0, 10, $nombre_usuario, 0, 1, 'C');
+        // Asegurarse de usar utf8_decode para manejar caracteres UTF-8
+        $this->Cell(0, 10, utf8_decode($nombre_usuario), 0, 1, 'C');
 
         // Añadir el RUT del usuario
         $this->SetXY(80, 120);
@@ -112,4 +113,3 @@ pg_free_result($result);
 pg_free_result($result_curso);
 pg_close($conn);
 ?>
-
