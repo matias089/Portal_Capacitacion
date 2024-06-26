@@ -19,7 +19,6 @@ if (isset($_SESSION['tipo_usuario'])) {
 
 $imagen_empresa = '/Portal_Capacitacion/templates/img/';
 
-// Determina la imagen del logo según la empresa del usuario
 if ($empresa_usuario == 'Savisa') {
     $imagen_empresa .= 'syv.png';
 } elseif ($empresa_usuario == 'Nevada') {
@@ -29,34 +28,23 @@ if ($empresa_usuario == 'Savisa') {
 } elseif ($empresa_usuario == 'Centenario') {
     $imagen_empresa .= 'ivc.png';
 } else {
-    // Si la empresa no está definida o no coincide con ninguna de las anteriores, muestra una imagen genérica
-    //$imagen_empresa .= 'default_logo.png';
 }
-
-#echo $imagen_empresa;
-#echo $empresa_usuario;
-#echo $_SESSION['empresa'];
-
-//echo "Tipo de Usuario: " . $tipo_usuario;
 
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <!-- Logo de la empresa a la izquierda -->
         <a class="navbar-brand" href="#">
             <img src="<?php echo $imagen_empresa; ?>" alt="Logo de la Empresa" width="50" height="50" class="d-inline-block align-top">
         </a>
         <li class="nav-item">
             <a class="nav-link" href="/Portal_Capacitacion/datos_usuario.php">Ver datos personales</a>
         </li>
-        
-        <!-- Botón de hamburguesa para dispositivos móviles -->
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        
-        <!-- Contenido del navbar -->
+
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">

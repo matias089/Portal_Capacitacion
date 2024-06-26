@@ -1,26 +1,20 @@
 <?php
-// Inicia la sesión si no está iniciada
 session_start();
 include '../../error_control.php';
 
-// Verifica si se ha pasado un parámetro de ID en la URL
 if(isset($_GET['id'])) {
-  // Recupera el ID del curso
+
   $curso_id = $_GET['id'];
   echo "ID del curso seleccionado: " . $curso_id;
 } else {
-  // Si no se proporcionó un ID válido, puedes redirigir al usuario o mostrar un mensaje de error
   echo "Error: No se proporcionó un ID válido";
 }
 
-// Verifica si el usuario está logueado
 if (!isset($_SESSION['tipo_usuario'])) {
-    // Si el usuario no está logueado, redirige a la página de login
     header("Location: '../../index.php'");
-    exit(); // Es importante salir del script después de redirigir
+    exit();
 }
 
-    // Determina qué video mostrar según el ID del curso
     if($curso_id == 1) {
       $video_src = "../FilesWeb/preview_vd1.mp4";
   } elseif($curso_id == 2) {
@@ -36,28 +30,19 @@ if (!isset($_SESSION['tipo_usuario'])) {
   } elseif($curso_id > 6) {
       $video_src = "../FilesWeb/video_prueba.mp4";
   } else {
-      // Si el ID del curso no coincide con ninguna opción válida, puedes mostrar un mensaje de error o manejarlo de acuerdo a tus necesidades
       echo "No se encontró un video para el ID del curso proporcionado.";
-      exit; // Termina la ejecución del script
+      exit;
   }
-
-// Incluye el archivo de conexión a la base de datos
-//include('/var/www/html/Portal_Capacitacion/db/db.php');
-
 include '../../db/db.php';
 
 $conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
 
-// Consultas SQL para obtener el nombre y la descripción del curso
- // Puedes cambiar este valor según sea necesario
 $query_nombre_curso = "SELECT nombre_cur FROM cursos WHERE id_cur = $curso_id";
 $query_descripcion_curso = "SELECT descripcion FROM cursos WHERE id_cur = $curso_id";
 
-// Ejecutar las consultas
 $result_nombre_curso = pg_query($conn, $query_nombre_curso);
 $result_descripcion_curso = pg_query($conn, $query_descripcion_curso);
 
-// Obtener los resultados de las consultas
 $nombre_curso = pg_fetch_result($result_nombre_curso, 0, 0);
 $descripcion_curso = pg_fetch_result($result_descripcion_curso, 0, 0);
 ?>
@@ -80,7 +65,6 @@ $descripcion_curso = pg_fetch_result($result_descripcion_curso, 0, 0);
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
     
     <style>
-      /* css de volver */
 .form1 .inputBox1
 {
     width: 100%;
@@ -90,10 +74,9 @@ $descripcion_curso = pg_fetch_result($result_descripcion_curso, 0, 0);
 
 .box {
     position: relative;
-    z-index: 1; /* Asegura que el botón esté por encima del video */
+    z-index: 1;
 }
 
-/* css de volver */
 .form1 .inputBox1 input
 {
     width: 86%;
@@ -112,16 +95,15 @@ $descripcion_curso = pg_fetch_result($result_descripcion_curso, 0, 0);
 
 
 }
-/* css de volver */
+
 .form1 .inputBox1 input[type="submit"]{
     background: #ffffff;
     color: #666;
     max-width: 200px;
     cursor: pointer;
-    /*margin-bottom: 20px;*/
     font-weight: 600px;
 }
-/* css de volver */
+
 .form1 .inputBox1 input[type="submit"]:hover{
     background: #2082dd;
     color: #ffffff;
@@ -142,12 +124,10 @@ $descripcion_curso = pg_fetch_result($result_descripcion_curso, 0, 0);
 
 @media (max-width: 768px) {
   .u-sheet {
-    margin-bottom: 10vh; /* Ajusta el margen inferior en dispositivos móviles */
+    margin-bottom: 10vh;
   }
 }
-
     </style>
-    
     
     <script type="application/ld+json">{
 		"@context": "http://schema.org",

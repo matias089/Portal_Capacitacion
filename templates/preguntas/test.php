@@ -91,17 +91,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     
-
-    // Verificar el resultado del examen y actualizar el estado en la base de datos
     if ($resultado >= 8) {
-        // Estado aprobado
         $estado_examen = 'Aprobado';
         foreach ($respuestas as $id_pregunta => $respuesta) {
             $query_delete = "DELETE FROM respuestas_usuario WHERE rut_usuario = '$rut' AND id_pregunta = $id_pregunta";
             $result_delete = pg_query($db, $query_delete);
         }
     } else {
-        // Estado reprobado
         $estado_examen = 'Reprobado';
         foreach ($respuestas as $id_pregunta => $respuesta) {
             $query_delete = "DELETE FROM respuestas_usuario WHERE rut_usuario = '$rut' AND id_pregunta = $id_pregunta";
@@ -109,36 +105,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-
-    // Determinar el estado del examen
     if ($resultado >= 8) {
         $estado_examen = 'Aprobado';
     } else {
         $estado_examen = 'Reprobado';
     }
     
-// Verificar si existe un registro en estado_examen para el usuario y el curso
 $query_select = "SELECT * FROM estado_examen WHERE rut = '$rut' AND id_cur = $id_examen";
 $result_select = pg_query($db, $query_select);
 
 if (pg_num_rows($result_select) == 0) {
-    // Si no se encuentra un registro, insertar uno nuevo
     $query_insert_estado = "INSERT INTO estado_examen (estado, rut, id_cur) VALUES ('$estado_examen', '$rut', $id_examen)";
     $result_insert_estado = pg_query($db, $query_insert_estado);
     if (!$result_insert_estado) {
         echo "Error al insertar el registro: " . pg_last_error($db);
     }
 } else {
-    // Si se encuentra un registro, actualizar el estado existente
     $query_update_estado = "UPDATE estado_examen SET estado = '$estado_examen' WHERE rut = '$rut' AND id_cur = $id_examen";
     $result_update_estado = pg_query($db, $query_update_estado);
     if (!$result_update_estado) {
         echo "Error al actualizar el registro: " . pg_last_error($db);
     }
 }
-
-
-    // Guardar las respuestas en la tabla respuestas_usuario
     foreach ($respuestas as $id_pregunta => $respuesta) {
         $query_delete = "DELETE FROM respuestas_usuario WHERE rut_usuario = '$rut' AND id_pregunta = $id_pregunta";
         $result_delete = pg_query($db, $query_delete);
@@ -147,11 +135,9 @@ if (pg_num_rows($result_select) == 0) {
         $result_insert = pg_query($db, $query_insert);
 
         if (!$result_insert) {
-            // Manejar el error en caso de falla en la inserción
             echo "Error al insertar la respuesta: " . pg_last_error($db);
         }
     }
-    // Redirigir al usuario a la página de resultado
     header("Location: ../resultado/resultado.php?resultado=$resultado&examen_id=$id_examen");
 
     exit();
@@ -159,7 +145,6 @@ if (pg_num_rows($result_select) == 0) {
 
 }
 
-// Cargar las respuestas guardadas en la tabla respuestas_usuario
 $respuestas_temporales = [];
 $query_respuestas_temporales = "SELECT * FROM respuestas_usuario WHERE rut_usuario = '$rut_del_usuario'";
 $result_respuestas_temporales = pg_query($db, $query_respuestas_temporales);
@@ -167,9 +152,6 @@ while ($row = pg_fetch_assoc($result_respuestas_temporales)) {
     $respuestas_temporales[$row['id_pregunta']] = $row['respuesta'];
 }
 
-
-
-// Mostrar el formulario para realizar el examen
 $preguntas = obtenerPreguntas($db,$id_examen);
 ?>
 <!DOCTYPE html>
@@ -197,7 +179,6 @@ $preguntas = obtenerPreguntas($db,$id_examen);
     background: linear-gradient(to right, #565768, #e8eafa);
   }
   .bg{
-    /*background-image: url('../../static/core/img/inevada.jpeg');*/
     background-position: center center;
   }
 
@@ -349,7 +330,6 @@ function mostrarPregunta(index) {
     }
 }
 
-// Mostrar la siguiente pregunta
 function mostrarSiguientePregunta() {
     if (preguntaActual < cantidadPreguntas - 1) {
         preguntas[preguntaActual].classList.remove('active');
@@ -362,7 +342,6 @@ function mostrarSiguientePregunta() {
     }
 }
 
-// Mostrar la pregunta anterior
 function mostrarAnteriorPregunta() {
     if (preguntaActual > 0) {
         preguntas[preguntaActual].classList.remove('active');
@@ -376,11 +355,8 @@ function mostrarAnteriorPregunta() {
 }
 function guardarRespuestas(id_examen) {
     var form = document.getElementById('evalua');
-    // Obtén la acción del formulario
     var action = 'guardar_respuestas.php?variable=<?php echo urlencode($id_examen); ?>';
-    // Establece la acción del formulario
     form.setAttribute('action', action);
-    // Envía el formulario
     form.submit();
 }
 
@@ -390,10 +366,7 @@ function actualizarContadorPreguntas() {
 }
 
 function confirmarEnvio() {
-    // Mostrar un mensaje de confirmación
     var respuesta = confirm("¿Estás seguro de enviar tus respuestas? Si se envían, no podrás modificarlas.");
-            
-    // Devolver true si el usuario confirma, false si cancela
     return respuesta;
 }
 

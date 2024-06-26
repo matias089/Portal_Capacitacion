@@ -15,7 +15,6 @@
         background: linear-gradient(to right, #565768, #e8eafa);
       }
       .bg{
-        /*background-image: url('../../static/core/img/inevada.jpeg');*/
         background-position: center center;
       }
     </style>
@@ -28,12 +27,8 @@
     <div class="color"></div>
     <div class="color"></div>
     <div class="box">
-        <!-- <div class="square" style="--i:0;"></div> -->
-        <!-- <div class="square" style="--i:1;"></div> -->
-        <!-- <div class="square" style="--i:2;"></div> -->
         <div class="square" style="--i:3;"></div>
         <div class="square" style="--i:4;"></div>
-        <!-- <div class="square" style="--i:5;"></div> -->
         <div class="square" style="--i:6;"></div>
          <div class="container">
 
@@ -45,8 +40,6 @@
                       <div class="col bg-white p-5 rounded-end">
 
                         <h2 class="fw-bold text-center py-5">Bienvenido</h2>
-
-                        <!-- Form -->
                         <form action="conexion.php" method="POST" onsubmit="return validateForm()">
                             <div class="mb-4">
                                 <label for="rut" class="form-label">Usuario</label>
@@ -56,12 +49,6 @@
                                 <label for="password" class="form-label">Contraseña</label>
                                 <input type="password" class="form-control" name="password" id="password" placeholder="********">
                             </div>
-                            <!--<div class="mb-4">
-                                <input type="checkbox" name="connected" class="form-check-input">
-                                <label for="connected" class="form-check-label">Mantenerme conectado</label>
-                            </div>-->
-
-                                <!-- Área para mostrar mensajes de error -->
                             <?php
                             if (isset($_GET['error'])) {
                                 $error_message = $_GET['error'];
@@ -89,7 +76,6 @@
                 </div>
             </div>            
           </section>
-          <!--<script src="login.js"></script>-->
   <script src="/Portal_Capacitacion/templates/js/login_validate.js">
   </script>  
 

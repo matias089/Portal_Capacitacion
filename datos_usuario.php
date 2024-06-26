@@ -1,35 +1,27 @@
 <?php
-// Iniciar sesión si no está iniciada
 session_start();
 include 'error_control.php';
 
-// Verificar si el usuario está logueado
 if (!isset($_SESSION['rut'])) {
-    // Si el usuario no está logueado, redirigir a la página de inicio de sesión
     header("Location: portada.html");
-    exit(); // Es importante salir del script después de redirigir
+    exit(); 
 }
 
-// Incluye el contenido del navbar y la conexión a la base de datos
 include 'navbar.php';
 include 'db/db.php';
 
-// Conexión a la base de datos
 $db = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
 
-// Obtener el rut del usuario iniciado de la sesión
+
 $rut_usuario = $_SESSION['rut'];
 
-// Consulta SQL para obtener los datos del usuario
 $sql = "SELECT * FROM public.usuarios WHERE rut = $1";
 $result = pg_query_params($db, $sql, array($rut_usuario));
 
-// Verificar si se enviaron datos para actualizar
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombre = $_POST['nombre'];
     $correo = $_POST['correo'];
 
-    // Actualizar los datos del usuario en la base de datos
     $update_sql = "UPDATE public.usuarios SET nombre = $1, correo = $2 WHERE rut = $3";
     $update_result = pg_query_params($db, $update_sql, array($nombre, $correo, $rut_usuario));
 
@@ -38,12 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         echo "<div class='alert alert-danger'>Error al actualizar los datos.</div>";
     }
-
-    // Recargar los datos actualizados
     $result = pg_query_params($db, $sql, array($rut_usuario));
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -88,7 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             background-color: #f2f2f2;
         }
 
-        /*   //////////// */
     </style>
 </head>
 <body>
@@ -104,9 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <div class="container-div1">
 
     <?php
-    // Verificar si se encontraron los datos del usuario
     if ($row = pg_fetch_assoc($result)) {
-        // Mostrar los datos del usuario en un formulario para permitir la edición
         echo "<h2>Datos Personales</h2>";
         echo "<form method='POST' action=''>";
         echo "<table>";
@@ -133,6 +119,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </html>
 
 <?php
-// Cerrar la conexión a la base de datos
 pg_close($db);
 ?>

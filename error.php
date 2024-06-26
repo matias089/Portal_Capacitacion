@@ -1,5 +1,4 @@
 <?php
-// Enviar encabezado HTTP 404
 http_response_code(404);
 ?>
 

@@ -1,44 +1,32 @@
 <?php
-// Iniciar sesión si no está iniciada
 session_start();
 include 'error_control.php';
 
-// Verificar si el usuario está logueado
 if (!isset($_SESSION['tipo_usuario'])) {
-    // Si el usuario no está logueado, redirigir a la página de inicio de sesión
     header("Location: portada.html");
-    exit(); // Es importante salir del script después de redirigir
+    exit();
 }
 
-// Incluye el contenido del navbar y la conexión a la base de datos
 include 'navbar.php';
 include 'db/db.php';
 
-// Configurar la zona horaria a la de Chile
 date_default_timezone_set('America/Santiago');
 
-// Conexión a la base de datos
 $db = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
 
-// Obtener el tipo de usuario de la sesión
 $tipo_usuario = $_SESSION['tipo_usuario'];
 
-// Inicializar el mensaje de notificación
 $mensaje_html = "";
 
-// Si el usuario es administrador y se envía el formulario, procesar la creación de la notificación
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $tipo_usuario == 'Administrador') {
     $titulo = $_POST['titulo'] ?? '';
     $mensaje = $_POST['mensaje'] ?? '';
     $tipo_usuario_destino = $_POST['tipo_usuario'] ?? '';
     $fecha = date("Y-m-d H:i");
 
-    // Convertir el tipo de usuario a la forma esperada en la base de datos
     $tipo_usuario_destino = ucfirst(strtolower($tipo_usuario_destino));
 
-    // Verificar si los campos están completos
     if ($titulo && $mensaje && $tipo_usuario_destino) {
-        // Preparar la consulta SQL para insertar la nueva notificación
         $query = "INSERT INTO public.notificaciones (titulo, mensaje, tipo_usuario, fecha) VALUES ($1, $2, $3, $4)";
         $result = pg_query_params($db, $query, array($titulo, $mensaje, $tipo_usuario_destino, $fecha));
 
@@ -52,7 +40,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $tipo_usuario == 'Administrador') {
     }
 }
 
-// Consulta SQL para obtener todas las notificaciones (sin filtro por tipo de usuario)
 $sql = "SELECT * FROM public.notificaciones ORDER BY fecha DESC";
 $result = pg_query($db, $sql);
 ?>
@@ -82,7 +69,6 @@ $result = pg_query($db, $sql);
     <?php echo $mensaje_html; ?>
 
     <?php
-    // Verificar si el usuario es administrador y mostrar el formulario de creación de notificaciones
     if ($tipo_usuario == 'Administrador') {
         echo '
         <div class="admin-form">
@@ -109,13 +95,10 @@ $result = pg_query($db, $sql);
         ';
     }
 
-    // Verificar si se encontraron notificaciones
     if (pg_num_rows($result) > 0) {
-        // Crear una tabla para mostrar las notificaciones
         echo "<table>";
         echo "<tr><th>Título</th><th>Mensaje</th><th>Fecha</th></tr>";
 
-        // Mostrar cada notificación en una fila de la tabla
         while ($row = pg_fetch_assoc($result)) {
             echo "<tr>";
             echo "<td>" . htmlspecialchars($row['titulo']) . "</td>";
@@ -133,6 +116,5 @@ $result = pg_query($db, $sql);
 </html>
 
 <?php
-// Cerrar la conexión a la base de datos
 pg_close($db);
 ?>

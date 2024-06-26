@@ -15,6 +15,4 @@ if (!function_exists('customException')) {
 
 set_error_handler("customError");
 set_exception_handler("customException");
-
-
 ?>

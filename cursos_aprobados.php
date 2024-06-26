@@ -1,10 +1,7 @@
 <?php
-// Inicia la sesión si no está iniciada
 session_start();
 include 'error_control.php';
-// Verifica si el usuario está logueado
 if (!isset($_SESSION['tipo_usuario'])) {
-    // Si el usuario no está logueado, redirige a la página de login
     header("Location: portada.html");
     exit();
 }
@@ -12,16 +9,13 @@ if (!isset($_SESSION['tipo_usuario'])) {
 include 'db/db.php';
 include 'navbar.php';
 
-// Establece la conexión
 $conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
 if (!$conn) {
     die("Error de conexión: " . pg_last_error());
 }
 
-// Obtiene el RUT del usuario logueado
-$rut = $_SESSION['rut']; // Asumiendo que el RUT del usuario está almacenado en la sesión
+$rut = $_SESSION['rut'];
 
-// Realiza la consulta con una unión entre las tablas estado_examen y cursos
 $query = "SELECT cursos.nombre_cur, estado_examen.id_cur 
           FROM estado_examen 
           JOIN cursos ON estado_examen.id_cur = cursos.id_cur 
@@ -101,9 +95,7 @@ $result = pg_query($conn, $query);
         </thead>
         <tbody>
             <?php
-
             if ($result) {
-                // Itera sobre los resultados y muestra las filas en la tabla
                 while ($row = pg_fetch_assoc($result)) {
                     echo "<tr>
                             <td>{$row['nombre_cur']}</td>
@@ -114,15 +106,11 @@ $result = pg_query($conn, $query);
             } else {
                 echo "<tr><td colspan='3'>No se encontraron cursos aprobados.</td></tr>";
             }
-
-            // Libera el resultado y cierra la conexión
             pg_free_result($result);
             pg_close($conn);
             ?>
         </tbody>
     </table>
 </div>
-
 </body>
 </html>
-

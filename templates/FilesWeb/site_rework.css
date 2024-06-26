@@ -529,9 +529,7 @@ div.u-video,
 }
 
 .u-btn {
-    /*display: inline-block;*/
     display: table;
-    /*TODO maye need another solution for negative marin*/
     cursor: pointer;
     color: inherit;
     font-size: inherit;
@@ -594,12 +592,12 @@ div.u-video,
 }
 
 h1 {
-  margin-top: 15vh; /* Mantiene un espacio de 15% de la altura visible del viewport en la parte superior */
-  max-width: 75vw; /* Establece un ancho máximo del 75% del ancho visible del viewport */
-  margin-left: 3vw; /* Establece un margen a la izquierda del 3% del ancho visible del viewport */
+  margin-top: 15vh; 
+  max-width: 75vw; 
+  margin-left: 3vw; 
 }
 
 p {
-  max-width: 60vw; /* Establece un ancho máximo del 60% del ancho visible del viewport */
-  margin-left: 3vw; /* Establece un margen a la izquierda del 3% del ancho visible del viewport */
+  max-width: 60vw;
+  margin-left: 3vw;
 }

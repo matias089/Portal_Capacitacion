@@ -25,7 +25,6 @@ th {
     border-radius: 5px;
     background-color: #f9f9f9;
 }
-/* Responsive typography */
 h2 {
     font-size: 5vw;
 }
@@ -35,7 +34,6 @@ th, td {
 input[type="submit"] {
     font-size: 4vw;
 }
-/* Media queries for larger screens */
 @media (min-width: 600px) {
     h2 {
         font-size: 3vw;

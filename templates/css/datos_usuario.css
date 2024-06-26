@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
 
 
-/* ///////////////////////////////////////////////////// */
+
 *{
     margin: 0;
     padding: 0;
@@ -17,8 +17,8 @@ section{
     align-items: center;
     min-height: 100vh;
     background: linear-gradient(to bottom,#f1f4f9,#dff1ff);
-    position: relative; /* Añade posición relativa para que los elementos absolutos dentro de la sección se posicionen correctamente */
-    overflow: hidden; /* Asegura que el contenido no se desborde */
+    position: relative; 
+    overflow: hidden; 
 }
 
 section .color{
@@ -139,7 +139,7 @@ section .color:nth-child(3){
 .form h2{
     position: relative;
     color: #000000;
-    font-size: 3vw; /* Usa unidades de viewport width (vw) para hacer el título responsivo */
+    font-size: 3vw; 
     font-weight: 600;
     letter-spacing: 1px;
     margin-bottom: 20px;
@@ -229,7 +229,7 @@ input[type="text"], input[type="email"] {
 .btn {
     margin-top: 20px;
 }
-/* Responsive typography */
+
 h2 {
     font-size: 5vw;
 }
@@ -240,7 +240,6 @@ input[type="submit"] {
     font-size: 4vw;
 }
 
-/* Media queries for larger screens */
 @media (min-width: 600px) {
     h2 {
         font-size: 3vw;
@@ -264,7 +263,7 @@ input[type="submit"] {
     }
 }
 
-/* css de volver */
+
 .form1 .inputBox1
 {
     width: 100%;
@@ -272,7 +271,6 @@ input[type="submit"] {
     margin-top: 1px;
 }
 
-/* css de volver */
 .form1 .inputBox1 input
 {
     width: 86%;
@@ -291,7 +289,7 @@ input[type="submit"] {
 
 
 }
-/* css de volver */
+
 .form1 .inputBox1 input[type="submit"]{
     background: #868686;
     color: #000000;
@@ -300,7 +298,7 @@ input[type="submit"] {
     margin-bottom: 20px;
     font-weight: 600px;
 }
-/* css de volver */
+
 .form1 .inputBox1 input[type="submit"]:hover{
     background: #2082dd;
     color: #ffffff;

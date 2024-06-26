@@ -30,7 +30,6 @@
   margin: 400px auto 0 0;
 }
 
-/* css de volver */
 .form1 .inputBox1
 {
     width: 100%;
@@ -38,7 +37,6 @@
     margin-top: 1px;
 }
 
-/* css de volver */
 .form1 .inputBox1 input
 {
     width: 86%;
@@ -57,7 +55,6 @@
 
 
 }
-/* css de volver */
 .form1 .inputBox1 input[type="submit"]{
     background: #ffffff;
     color: #666;
@@ -66,7 +63,7 @@
     margin-bottom: 10px;
     font-weight: 600px;
 }
-/* css de volver */
+
 .form1 .inputBox1 input[type="submit"]:hover{
     background: #2082dd;
     color: #ffffff;

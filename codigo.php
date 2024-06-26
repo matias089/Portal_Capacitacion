@@ -1,41 +1,31 @@
 
 <?php
-//echo $rut;
 session_start();
 
 include 'error_control.php';
-// Verificar si el usuario está intentando enviar el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Verificar si se recibió el código ingresado por el usuario
     if (isset($_POST['digit1']) && isset($_POST['digit2']) && isset($_POST['digit3']) && isset($_POST['digit4']) && isset($_POST['digit5'])) {
-        // Recuperar los valores de los campos de entrada
         $digit1 = $_POST['digit1'];
         $digit2 = $_POST['digit2'];
         $digit3 = $_POST['digit3'];
         $digit4 = $_POST['digit4'];
         $digit5 = $_POST['digit5'];
-        // Concatenar los dígitos en una sola cadena
         $codigo2 = $digit1 . $digit2 . $digit3 . $digit4 . $digit5;
-        //echo $rut;
         $codigo_generado = $_SESSION['codigo_recuperacion'];
         
         $rut = $_SESSION["rut"];
 
-        ob_start(); // Iniciar el buffer de salida
+        ob_start(); 
         var_dump($rut);
-        $output = ob_get_clean(); // Capturar la salida del buffer y limpiarlo
-        
-        // Verificar si los códigos coinciden
+        $output = ob_get_clean();
+
         if ($codigo2 == $codigo_generado) {
-          // Redirigir a newpw.php con el valor de $rut como parámetro en la URL
           header("Location: newpw.php?rut=" . urlencode($rut));
           exit();
         } else {
-            // Los códigos no coinciden, mostrar un mensaje de error
             $error_message = "El código ingresado es incorrecto. Por favor, inténtalo de nuevo.";
         }
     } else {
-        // Si no se recibieron todos los dígitos, muestra un mensaje de error
         $error_message = "Por favor, ingresa todos los dígitos del código de recuperación.";
     }
 }
@@ -105,7 +95,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
-
     <script src="/Portal_Capacitacion/templates/js/codigo.js">
   </script>  
         </div>

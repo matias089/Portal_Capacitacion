@@ -8,24 +8,18 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Verificar si el usuario está logueado
 if (!isset($_SESSION['rut'])) {
-    // Redirigir al usuario al formulario de inicio de sesión o mostrar un mensaje de error
     header("Location: login.php");
     exit();
 }
 
-// Verifica si se ha pasado un parámetro de ID en la URL
 if(isset($_GET['id'])) {
-    // Recupera el ID del curso
     $curso_id = $_GET['id'];
 } else {
-    // Si no se proporcionó un ID válido, puedes redirigir al usuario o mostrar un mensaje de error
     echo "Error: No se proporcionó un ID válido";
     exit();
 }
 
-// Determina qué video mostrar según el ID del curso
 $videos = [
     1 => "preview_vd1.mp4",
     2 => "preview_vd2.mp4",
@@ -41,11 +35,9 @@ $rut_del_usuario = $_SESSION['rut'];
 
 $conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
 
-// Verificar si el usuario ha realizado el curso actual
 $query_estado_examen = "SELECT * FROM estado_examen WHERE rut = $1 AND id_cur = $2";
 $resultado_estado_examen = pg_query_params($conn, $query_estado_examen, array($rut_del_usuario, $curso_id));
 
-// Verificar si se encontraron resultados en la consulta
 if (pg_num_rows($resultado_estado_examen) > 0) {
     $row = pg_fetch_assoc($resultado_estado_examen);
     $estado_examen = $row['estado'];
@@ -53,13 +45,10 @@ if (pg_num_rows($resultado_estado_examen) > 0) {
     $estado_examen = "Sin realizar";
 }
 
-// Prepara la consulta SQL para obtener el nombre del curso
 $consulta = "SELECT nombre_cur FROM cursos WHERE id_cur = $1";
 $resultado = pg_query_params($conn, $consulta, array($curso_id));
 
-// Verifica si la consulta se ejecutó correctamente
 if ($resultado) {
-    // Intenta obtener el nombre del curso y maneja cualquier error
     try {
         $fila = pg_fetch_assoc($resultado);
         if (!$fila || !isset($fila['nombre_cur'])) {
@@ -71,7 +60,6 @@ if ($resultado) {
         exit();
     }
 } else {
-    // Redirige a 404.php si la consulta falla
     header("Location: 404.php");
     exit();
 }
@@ -91,7 +79,6 @@ function obtener_clase_estado($estado_examen) {
     }
 }
 
-// Determinar si el botón de descarga de contenido debe estar deshabilitado
 $boton_descarga_deshabilitado = ($estado_examen === 'Aprobado');
 
 ?>

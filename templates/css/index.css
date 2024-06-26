@@ -1,4 +1,4 @@
-/* Estilos para el contenedor del carrusel */
+
 #carrusel-container {
   width: 100%;
   max-width: 1600px;
@@ -7,27 +7,22 @@
   margin: 0 auto;
 }
 
-/* Estilos para el carrusel interno */
 #carrusel-container .carousel-inner {
   position: relative;
 }
 
-/* Establece la transición para las imágenes del carrusel */
 #carrusel-container .carousel-item {
-  transition: opacity 0.4s ease-in-out; /* Transición de opacidad */
+  transition: opacity 0.4s ease-in-out;
 }
 
-/* Establece la opacidad inicial de las imágenes */
 #carrusel-container .carousel-item {
   opacity: 0;
 }
 
-/* Establece la opacidad de la imagen activa */
 #carrusel-container .carousel-item.active {
   opacity: 1;
 }
 
-/* Estilos para el listado de imágenes */
 #image-list {
   max-width: 100%;
   overflow-x: auto;
@@ -48,21 +43,19 @@
   text-decoration: none;
 }
 
-
-      h2 {
-        padding: 30px;
-      }
-
-      section{
-    display: flex;
-    justify-content: left;
-    align-items: left;
-    min-height: 100vh;
-    background: linear-gradient(to bottom,#f1f4f9,#6c8ca5);
-    position: relative; /* Añade posición relativa para que los elementos absolutos dentro de la sección se posicionen correctamente */
-    overflow: hidden; /* Asegura que el contenido no se desborde */
+h2 {
+  padding: 30px;
 }
 
+section{
+  display: flex;
+  justify-content: left;
+  align-items: left;
+  min-height: 100vh;
+  background: linear-gradient(to bottom,#f1f4f9,#6c8ca5);
+  position: relative;
+  overflow: hidden;
+}
 
 .image-list {
   display: flex;

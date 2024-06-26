@@ -11,7 +11,6 @@
     <form action="calcular_resultado.php" method="post">
         <ol>
             <?php
-            // Array de preguntas y respuestas
             $preguntas = array(
                 "¿Cuál es la capital de Australia?",
                 "¿Quién escribió 'El Principito'?",
@@ -39,8 +38,7 @@
                 array("Tierra", "Marte", "Júpiter", "Saturno"),
                 array("Cristóbal Colón", "Vasco de Gama", "Magallanes", "Hernán Cortés")
             );
-
-            // Mostrar preguntas y opciones
+            
             for ($i = 0; $i < count($preguntas); $i++) {
                 echo "<li>" . $preguntas[$i] . "<br>";
                 foreach ($respuestas[$i] as $opcion) {

@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
 
-/* Estilos para centrar el div */
+
 body, html {
     height: 100%;
     margin: 0;
@@ -9,12 +9,12 @@ body, html {
     background-color: #ffffff;
 }
 
-/* Estilos para el formulario */
+
 form {
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    max-width: 100%; /* Asegura que el formulario ocupe todo el ancho del div */
+    max-width: 100%; 
 }
 
 input, select {
@@ -53,29 +53,29 @@ input, select {
 .inputBox2:hover {
     background-color: #0056b3;
 }
-/* Estilos para el div contenedor */
+
 .container-div {
-    width: 50%; /* Establece el ancho del contenedor al 50% del contenedor principal */
-    height: 60vh; /* Tamaño fijo para el div */
-    overflow-y: auto; /* Aparece el scroll solo si es necesario */
+    width: 50%; 
+    height: 60vh; 
+    overflow-y: auto; 
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 20px;
     margin: auto;
-    float: left; /* Hace que el contenedor se posicione a la izquierda */
+    float: left;
 }
 
 .container-div1 {
-    width: 50%; /* Establece el ancho del contenedor al 50% del contenedor principal */
-    height: 60vh; /* Tamaño fijo para el div */
-    overflow-y: auto; /* Aparece el scroll solo si es necesario */
+    width: 50%; 
+    height: 60vh; 
+    overflow-y: auto; 
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 20px;
     margin: auto;
-    float: left; /* Hace que el contenedor se posicione a la izquierda */
+    float: left; 
 }
-/* ///////////////////////////////////////////////////// */
+
 *{
     margin: 0;
     padding: 0;
@@ -91,8 +91,8 @@ section{
     align-items: center;
     min-height: 100vh;
     background: linear-gradient(to bottom,#f1f4f9,#dff1ff);
-    position: relative; /* Añade posición relativa para que los elementos absolutos dentro de la sección se posicionen correctamente */
-    overflow: hidden; /* Asegura que el contenido no se desborde */
+    position: relative; 
+    overflow: hidden; 
 }
 
 section .color{
@@ -213,7 +213,7 @@ section .color:nth-child(3){
 .form h2{
     position: relative;
     color: #000000;
-    font-size: 3vw; /* Usa unidades de viewport width (vw) para hacer el título responsivo */
+    font-size: 3vw;
     font-weight: 600;
     letter-spacing: 1px;
     margin-bottom: 20px;
@@ -303,7 +303,6 @@ input[type="text"], input[type="email"] {
 .btn {
     margin-top: 20px;
 }
-/* Responsive typography */
 h2 {
     font-size: 5vw;
 }
@@ -314,7 +313,6 @@ input[type="submit"] {
     font-size: 4vw;
 }
 
-/* Media queries for larger screens */
 @media (min-width: 600px) {
     h2 {
         font-size: 1.5vw;
@@ -338,7 +336,6 @@ input[type="submit"] {
     }
 }
 
-/* css de volver */
 .form1 .inputBox1
 {
     width: 100%;
@@ -346,7 +343,6 @@ input[type="submit"] {
     margin-top: 1px;
 }
 
-/* css de volver */
 .form1 .inputBox1 input
 {
     width: 86%;
@@ -365,7 +361,6 @@ input[type="submit"] {
 
 
 }
-/* css de volver */
 .form1 .inputBox1 input[type="submit"]{
     background: #868686;
     color: #000000;
@@ -374,7 +369,7 @@ input[type="submit"] {
     margin-bottom: 20px;
     font-weight: 600px;
 }
-/* css de volver */
+
 .form1 .inputBox1 input[type="submit"]:hover{
     background: #2082dd;
     color: #ffffff;

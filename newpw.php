@@ -2,7 +2,6 @@
 session_start();
 
 include 'error_control.php';
-// Verifica si la sesión está iniciada
 if (!isset($_SESSION['rut'])) {
     header("Location: pwreset.php");
     exit();
@@ -20,7 +19,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_password1 = $_POST['new_password1'];
     $new_password2 = $_POST['new_password2'];
 
-    // Función para validar la contraseña
     function validar_contrasena($password) {
         if (strlen($password) < 8) return false;
         if (!preg_match('/[A-Z]/', $password)) return false;

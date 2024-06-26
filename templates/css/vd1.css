@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
 
-
-
 *{
     margin: 0;
     padding: 0;
@@ -17,8 +15,8 @@ section{
     align-items: center;
     min-height: 100vh;
     background: linear-gradient(to bottom,#f1f4f9,#dff1ff);
-    position: relative; /* Añade posición relativa para que los elementos absolutos dentro de la sección se posicionen correctamente */
-    overflow: hidden; /* Asegura que el contenido no se desborde */
+    position: relative;
+    overflow: hidden;
 }
 
 section .color{
@@ -139,7 +137,7 @@ section .color:nth-child(3){
 .form h2{
     position: relative;
     color: #000000;
-    font-size: 3vw; /* Usa unidades de viewport width (vw) para hacer el título responsivo */
+    font-size: 3vw;
     font-weight: 600;
     letter-spacing: 1px;
     margin-bottom: 20px;
@@ -199,12 +197,11 @@ section .color:nth-child(3){
     font-weight: 600;
 }
 
-/* Estilos para el contenedor del video */
 .video-container {
     position: relative;
-    padding-bottom: 56.25%; /* Proporción 16:9 */
+    padding-bottom: 56.25%;
     height: 0;
-    max-width: 100%; /* Ajusta el ancho máximo del contenedor del video */
+    max-width: 100%;
 }
 
 .video {
@@ -212,9 +209,6 @@ section .color:nth-child(3){
 	max-width: 1080px;
 }
 
-
-
-/* css de volver */
 .form1 .inputBox1
 {
     width: 100%;
@@ -222,7 +216,6 @@ section .color:nth-child(3){
     margin-top: 1px;
 }
 
-/* css de volver */
 .form1 .inputBox1 input
 {
     width: 86%;
@@ -241,7 +234,7 @@ section .color:nth-child(3){
 
 
 }
-/* css de volver */
+
 .form1 .inputBox1 input[type="submit"]{
     background: #ffffff;
     color: #666;
@@ -250,7 +243,7 @@ section .color:nth-child(3){
     margin-bottom: 20px;
     font-weight: 600px;
 }
-/* css de volver */
+
 .form1 .inputBox1 input[type="submit"]:hover{
     background: #2082dd;
     color: #ffffff;
@@ -263,17 +256,12 @@ section .color:nth-child(3){
     margin-top: 20px;
 }
 
-
-/* ///////////////////////////////////////////////////////////////////////////////// */
-
-
-
 .video-container video {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%; /* Usa porcentajes para el tamaño del video */
-    height: 100%; /* Usa porcentajes para el tamaño del video */
+    width: 100%;
+    height: 100%;
 }
 
 .estado-examen{

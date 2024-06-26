@@ -1,20 +1,19 @@
 function validateForm() {
     var password = document.getElementById("password").value;
 
-    // Expresiones regulares para verificar requisitos de la contraseña
-    var specialChars = /[!@#$%^&*(),.?":{}|<>]/g; // Caracteres especiales
-    var uppercaseChars = /[A-Z]/g; // Letras mayúsculas
-    var numberChars = /[0-9]/g; // Números
+    var specialChars = /[!@#$%^&*(),.?":{}|<>]/g;
+    var uppercaseChars = /[A-Z]/g;
+    var numberChars = /[0-9]/g;
 
     if (
-      password.length < 8 || // Mínimo 8 caracteres
-      !specialChars.test(password) || // Al menos un carácter especial
-      !uppercaseChars.test(password) || // Al menos una letra mayúscula
-      !numberChars.test(password) // Al menos un número
+      password.length < 8 ||
+      !specialChars.test(password) || 
+      !uppercaseChars.test(password) ||
+      !numberChars.test(password) 
     ) {
       alert("La contraseña debe tener al menos 8 caracteres, un carácter especial, una letra mayúscula y un número.");
-      return false; // Evitar enviar el formulario si la validación falla
+      return false;
     }
 
-    return true; // Enviar el formulario si la validación es exitosa
+    return true;
   }
