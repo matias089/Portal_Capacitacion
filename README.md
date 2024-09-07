@@ -4,8 +4,8 @@ Sistema Web Learning Capacitación y cursos online (Uso privado para las empresa
 
 Features:
 
--Uso de librería FPDF para la creación de certificados online.
--Inicio de Sesión con guardado temporal, avisos de inactividad.
--Recuperación de contraseña con uso de correo electrónico asociado a la base de datos.
+-Creación de certificados online. (FPDF)
+-Inicio de Sesión con guardado temporal, avisos de inactividad. (JavaScript)
+-Recuperación de contraseña con uso de correo electrónico asociado a la base de datos. (PHP MAILER)
 
 ////////////////////////////////////////
