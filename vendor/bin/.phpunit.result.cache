@@ -1,0 +1,1 @@
+{"version":1,"defects":{"DatabaseTest::testConnection":7},"times":{"DatabaseTest::testConnection":0.032,"CodeTest::testGenerarCodigo":0.006,"CrearUsuarioTest::testInsertarUsuario":0.291,"EliminarUsuarioTest::testEliminarUsuario":0.018}}

@@ -87,7 +87,7 @@ $boton_descarga_deshabilitado = ($estado_examen === 'Aprobado');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modelo prevención de delito</title>
+    <title>Curso</title>
     <link rel="stylesheet" href="/Portal_Capacitacion/templates/css/vd1.css">
 </head>
 
@@ -123,7 +123,7 @@ $boton_descarga_deshabilitado = ($estado_examen === 'Aprobado');
                         </video>
                     </div>
                     <div class="inputBox">
-                        <a href="/Portal_Capacitacion/templates/descarga/Curso_MPD.pdf" target="blank">
+                        <a href="/Portal_Capacitacion/templates/descarga/Curso_<?php echo $curso_id; ?>.pdf" target="blank">
                             <input type="submit" value="Descargar contenido" id="pdfButton"/>
                         </a>
                         <?php if ($estado_examen === 'Aprobado'): ?>
