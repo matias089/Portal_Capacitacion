@@ -34,7 +34,7 @@ if (isset($_POST['rut'])) {
         $mail->Host = 'smtp.sendgrid.net';
         $mail->SMTPAuth   = true;
         $mail->Username = 'apikey'; // Literalmente la palabra 'apikey'
-        $mail->Password = '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'; // API Key de SendGrid
+        $mail->Password = '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'; // API Key de SendGrid
         $mail->SMTPSecure = 'tls';
         $mail->Port       = 587;
         $mail->CharSet    = 'UTF-8';

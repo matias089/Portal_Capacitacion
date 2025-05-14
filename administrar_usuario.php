@@ -117,13 +117,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $mail = new PHPMailer\PHPMailer\PHPMailer();
         $mail->isSMTP();
-        $mail->Host       = 'smtp.office365.com';
+        $mail->Host = 'smtp.sendgrid.net';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'acecorp-projects@outlook.es';
-        $mail->Password   = 'Wok18964';
+        $mail->Username = 'apikey'; // Literalmente la palabra 'apikey'
+        $mail->Password = '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'; // API Key de SendGrid
         $mail->SMTPSecure = 'tls';
         $mail->Port       = 587;
         $mail->CharSet    = 'UTF-8';
+
 
         $mail->SMTPDebug = 0;
         $mail->Debugoutput = 'html';
