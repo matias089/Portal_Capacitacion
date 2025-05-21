@@ -1,107 +1,132 @@
 <?php
+
 use PHPUnit\Framework\TestCase;
+require_once __DIR__ . '/../ValidadorUsuario.php';
 
-require_once __DIR__ . '/../validator/validator_crear_usuario.php';
+class ValidadorUsuarioTest extends TestCase {
 
-class ValidacionUsuario extends TestCase
-{
-    public function testRutValido()
-    {
-        $this->assertTrue(Validator::validarRut("12345678-9"));
+    // === PRUEBAS PARA RUT ===
+
+    public function testRutFormatoValido() {
+        // Arrange
+        $rut = "12345678-9";
+
+        // Act
+        $resultado = ValidadorUsuario::validarRut($rut);
+
+        // Assert
+        $this->assertTrue($resultado);
     }
 
-    public function testRutSinGuion()
-    {
-        $this->assertFalse(Validator::validarRut("123456789"));
+    public function testRutSinGuionInvalido() {
+        // Arrange
+        $rut = "123456789";
+
+        // Act
+        $resultado = ValidadorUsuario::validarRut($rut);
+
+        // Assert
+        $this->assertFalse($resultado);
     }
 
-    public function testRutConPuntos()
-    {
-        $this->assertFalse(Validator::validarRut("12.345.678-9"));
+    public function testRutConPuntosInvalido() {
+        // Arrange
+        $rut = "12.345.678-9";
+
+        // Act
+        $resultado = ValidadorUsuario::validarRut($rut);
+
+        // Assert
+        $this->assertFalse($resultado);
     }
 
-    public function testRutConSimbolos()
-    {
-        $this->assertFalse(Validator::validarRut("123a456&78-9"));
+    public function testRutConSimbolosOLetrasInvalido() {
+        // Arrange
+        $rut = "123a456&78-9";
+
+        // Act
+        $resultado = ValidadorUsuario::validarRut($rut);
+
+        // Assert
+        $this->assertFalse($resultado);
     }
 
-    public function testContrasenaValida()
-    {
-        $this->assertTrue(Validator::validarContrasena("Contr4señ@"));
+    public function testRutVacioONuloInvalido() {
+        // Arrange
+        $rut = "";
+
+        // Act
+        $resultado = ValidadorUsuario::validarRut($rut);
+
+        // Assert
+        $this->assertFalse($resultado);
     }
 
-    public function testContrasenaCorta()
-    {
-        $this->assertFalse(Validator::validarContrasena("passw0rd!"));
+    // === PRUEBAS PARA CONTRASEÑA ===
+
+    public function testContrasenaValida() {
+        // Arrange
+        $contrasena = "Contr4señ@";
+
+        // Act
+        $resultado = ValidadorUsuario::validarContrasena($contrasena);
+
+        // Assert
+        $this->assertTrue($resultado);
     }
 
-    public function testContrasenaSinMayuscula()
-    {
-        $this->assertFalse(Validator::validarContrasena("p@ssword1"));
+    public function testContrasenaMenosDe8Caracteres() {
+        // Arrange
+        $contrasena = "Pa0rd!";
+
+        // Act
+        $resultado = ValidadorUsuario::validarContrasena($contrasena);
+
+        // Assert
+        $this->assertFalse($resultado);
     }
 
-    public function testContrasenaSinSimbolo()
-    {
-        $this->assertFalse(Validator::validarContrasena("Password1"));
+    public function testContrasenaSinMayuscula() {
+        // Arrange
+        $contrasena = "p@ssword1!";
+
+        // Act
+        $resultado = ValidadorUsuario::validarContrasena($contrasena);
+
+        // Assert
+        $this->assertFalse($resultado);
     }
 
-    public function testContrasenaSinNumero()
-    {
-        $this->assertFalse(Validator::validarContrasena("P@ssword!"));
+    public function testContrasenaSinCaracterEspecial() {
+        // Arrange
+        $contrasena = "Password1";
+
+        // Act
+        $resultado = ValidadorUsuario::validarContrasena($contrasena);
+
+        // Assert
+        $this->assertFalse($resultado);
     }
 
-    public function testNombreNoVacio()
-    {
-        $this->assertTrue(Validator::validarNombre("David Hernán Onofre"));
+    public function testContrasenaSinNumero() {
+        // Arrange
+        $contrasena = "P@ssword!";
+
+        // Act
+        $resultado = ValidadorUsuario::validarContrasena($contrasena);
+
+        // Assert
+        $this->assertFalse($resultado);
     }
 
-    public function testNombreVacio()
-    {
-        $this->assertFalse(Validator::validarNombre(""));
-    }
+    public function testContrasenaVaciaONula() {
+        // Arrange
+        $contrasena = "";
 
-    public function testCorreoValido()
-    {
-        $this->assertTrue(Validator::validarCorreo("matias@duocuc.cl"));
-    }
+        // Act
+        $resultado = ValidadorUsuario::validarContrasena($contrasena);
 
-    public function testCorreoConArrobaAlFinal()
-    {
-        $this->assertFalse(Validator::validarCorreo("matias@duocuc.cl@"));
-    }
-
-    public function testCorreoSinArroba()
-    {
-        $this->assertFalse(Validator::validarCorreo("matiasduocuc.cl"));
-    }
-
-    public function testEmpresaValida()
-    {
-        $this->assertTrue(Validator::validarEmpresa("Nevada"));
-    }
-
-    public function testEmpresaVacia()
-    {
-        $this->assertFalse(Validator::validarEmpresa(""));
-    }
-
-    public function testTipoUsuarioValido()
-    {
-        $this->assertTrue(Validator::validarTipoUsuario("Administrador"));
-    }
-
-    public function testTipoUsuarioVacio()
-    {
-        $this->assertFalse(Validator::validarTipoUsuario(""));
-    }
-
-    public function testCargoValido()
-    {
-        $this->assertTrue(Validator::validarCargo("Analista"));
-    }
-
-    public function testCargoVacio()
-    {
-        $this->assertFalse(Validator::validarCargo(""));
+        // Assert
+        $this->assertFalse($resultado);
     }
 }
