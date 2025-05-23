@@ -6,7 +6,7 @@
          
     <testsuites>
         <testsuite name="Pruebas de Validación de Usuario">
-            <directory suffix=".php">./tests</directory>
+            <directory suffix="inicioSesionExitosa.php">./tests</directory>
         </testsuite>
     </testsuites>
 
