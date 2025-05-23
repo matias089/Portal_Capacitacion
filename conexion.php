@@ -1,91 +1,38 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/db/db.php';
 
-class AuthService {
-    private $conn;
-    
-    public function __construct($conn) {
-        $this->conn = $conn;
-    }
-    
-    public function validarRut($rut) {
-        return preg_match('/^\d{7,8}-[0-9kK]{1}$/', $rut);
-    }
-    
-    public function validarPassword($password) {
-        return strlen($password) >= 8 &&
-               preg_match('/[A-Z]/', $password) &&
-               preg_match('/[a-z]/', $password) &&
-               preg_match('/[0-9]/', $password) &&
-               preg_match('/[\W]/', $password);
-    }
-    
-    public function autenticarUsuario($rut, $password) {
-        // Validaciones básicas
-        if (empty($rut) || empty($password)) {
-            return ['error' => "Los campos no pueden estar vacíos."];
-        }
+use PortalCapacitacion\AuthService;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rut']) && isset($_POST['password'])) {
+    try {
+        // Crear conexión PDO real
+        $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
-        if (!$this->validarRut($rut)) {
-            return ['error' => "Formato de RUT inválido. Ej: 12345678-9"];
-        }
+        $authService = new AuthService($pdo);
         
-        if (!$this->validarPassword($password)) {
-            return ['error' => "Contraseña inválida. Debe tener al menos 8 caracteres, 1 mayúscula, 1 número y 1 símbolo."];
-        }
-        
-        // Verificar usuario en BD
-        $query = "SELECT rut, nombre, tipo_usuario, empresa FROM usuarios WHERE rut=$1 AND contrasena=$2";
-        $result = pg_query_params($this->conn, $query, array($rut, $password));
-        
-        if (pg_num_rows($result) > 0) {
-            $usuario = pg_fetch_assoc($result);
-            
-            // Actualizar última conexión
-            $update_query = "UPDATE usuarios SET ultima_conexion = CURRENT_TIMESTAMP WHERE rut = $1";
-            pg_query_params($this->conn, $update_query, array($rut));
-            
-            return [
-                'success' => true,
-                'usuario' => $usuario
-            ];
+        if ($authService->authenticate($_POST['rut'], $_POST['password'])) {
+            // Redireccionar según tipo de usuario
+            switch ($_SESSION['tipo_usuario']) {
+                case 'admin':
+                    header("Location: /admin_index.php");
+                    break;
+                case 'usuario':
+                    header("Location: /user_index.php");
+                    break;
+                default:
+                    header("Location: /index.php");
+            }
+            exit();
         } else {
-            return ['error' => "Usuario o contraseña incorrectos."];
+            header("Location: /login.php?error=1");
+            exit();
         }
+    } catch (Exception $e) {
+        error_log("Error de autenticación: " . $e->getMessage());
+        header("Location: /login.php?error=2");
+        exit();
     }
 }
-
-// DATOS CONEXIÓN
-include('db/db.php');
-$conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
-
-if (!$conn) {
-    $error_message = "Error al conectar a la base de datos.";
-    header('Location: login.php?error=' . urlencode($error_message));
-    exit;
-}
-
-// OBTENER DATOS POST
-$rut = $_POST['rut'] ?? '';
-$password = $_POST['password'] ?? '';
-
-// Crear instancia del servicio de autenticación
-$authService = new AuthService($conn);
-$resultado = $authService->autenticarUsuario($rut, $password);
-
-if (isset($resultado['error'])) {
-    header('Location: login.php?error=' . urlencode($resultado['error']));
-    exit;
-} else {
-    $_SESSION['tipo_usuario'] = $resultado['usuario']['tipo_usuario'];
-    $_SESSION['empresa'] = $resultado['usuario']['empresa'];
-    $_SESSION['rut'] = $resultado['usuario']['rut'];
-    $_SESSION['nombre'] = $resultado['usuario']['nombre'];
-    
-    header('Location: index.php');
-}
-
-pg_close($conn);
 ?>

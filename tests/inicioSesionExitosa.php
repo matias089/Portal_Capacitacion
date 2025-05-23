@@ -1,93 +1,136 @@
 <?php
-use PHPUnit\Framework\TestCase;
+namespace PortalCapacitacion\Tests;
 
-class AuthServiceTest extends TestCase
+use PHPUnit\Framework\TestCase;
+use PDO;
+use PDOStatement;
+use PortalCapacitacion\AuthService;
+
+class inicioSesionExitosa extends TestCase
 {
+    private $mockPdo;
     private $authService;
-    private $mockConn;
     
     protected function setUp(): void
     {
-        // Crear un mock de la conexión a PostgreSQL
-        $this->mockConn = $this->createMock(\PDO::class);
+        // Mock de la conexión PDO
+        $this->mockPdo = $this->createMock(PDO::class);
         
-        // Inicializar el servicio de autenticación con el mock
-        $this->authService = new AuthService($this->mockConn);
+        // Crear instancia del servicio con el mock
+        $this->authService = new AuthService($this->mockPdo);
+        
+        // Inicializar sesión para pruebas
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        $_SESSION = []; // Limpiar sesión antes de cada test
     }
     
-    public function testInicioSesionExitosoConCredencialesValidas()
+    public function testInicioSesionValido()
     {
-        // Configurar datos de prueba
-        $rutValido = '12345678-9';
-        $passwordValido = 'Contr4señ@';
-        
-        // Mock de la consulta a la base de datos
-        $mockStatement = $this->createMock(\PDOStatement::class);
-        
-        // Configurar el mock para simular un usuario encontrado
+        // Configurar mock para éxito
+        $mockStatement = $this->createMock(PDOStatement::class);
         $mockStatement->method('rowCount')->willReturn(1);
         $mockStatement->method('fetch')->willReturn([
-            'rut' => $rutValido,
-            'nombre' => 'Usuario de Prueba',
+            'rut' => '12345678-9',
+            'nombre' => 'Usuario Test',
             'tipo_usuario' => 'admin',
-            'empresa' => 'Empresa Test'
+            'empresa' => 'Test Corp'
         ]);
         
-        // Configurar el mock de la conexión para devolver el statement mockeado
-        $this->mockConn->method('prepare')->willReturn($mockStatement);
+        // Configurar expectativas del mock usando with() individual
+        $mockStatement->expects($this->exactly(2))
+                     ->method('bindParam')
+                     ->willReturnCallback(function($param, $value) {
+                         static $callCount = 0;
+                         $callCount++;
+                         
+                         if ($callCount === 1) {
+                             $this->assertEquals(':rut', $param);
+                             $this->assertEquals('12345678-9', $value);
+                         } elseif ($callCount === 2) {
+                             $this->assertEquals(':password', $param);
+                             $this->assertEquals('Passw0rd!', $value);
+                         }
+                         
+                         return true;
+                     });
         
-        // Ejecutar la autenticación
-        $resultado = $this->authService->autenticarUsuario($rutValido, $passwordValido);
+        $mockStatement->expects($this->once())
+                     ->method('execute');
+        
+        $this->mockPdo->expects($this->once())
+                     ->method('prepare')
+                     ->with($this->stringContains('SELECT rut, nombre, tipo_usuario, empresa FROM usuarios'))
+                     ->willReturn($mockStatement);
+        
+        // Ejecutar autenticación
+        $result = $this->authService->authenticate('12345678-9', 'Passw0rd!');
         
         // Verificaciones
-        $this->assertArrayHasKey('success', $resultado);
-        $this->assertTrue($resultado['success']);
-        $this->assertArrayHasKey('usuario', $resultado);
-        $this->assertEquals($rutValido, $resultado['usuario']['rut']);
+        $this->assertTrue($result);
+        $this->assertArrayHasKey('rut', $_SESSION);
+        $this->assertEquals('12345678-9', $_SESSION['rut']);
+        $this->assertEquals('Usuario Test', $_SESSION['nombre']);
+        $this->assertEquals('admin', $_SESSION['tipo_usuario']);
+        $this->assertEquals('Test Corp', $_SESSION['empresa']);
     }
     
-    public function testValidacionRut()
+    public function testInicioSesionInvalido()
     {
-        // RUT válidos
-        $this->assertTrue($this->authService->validarRut('12345678-9'));
-        $this->assertTrue($this->authService->validarRut('1234567-k'));
-        
-        // RUT inválidos
-        $this->assertFalse($this->authService->validarRut('123456789')); // Sin guión
-        $this->assertFalse($this->authService->validarRut('12.345.678-9')); // Con puntos
-        $this->assertFalse($this->authService->validarRut('12345678-x')); // DV incorrecto
-    }
-    
-    public function testValidacionPassword()
-    {
-        // Contraseña válida
-        $this->assertTrue($this->authService->validarPassword('Contr4señ@'));
-        
-        // Contraseñas inválidas
-        $this->assertFalse($this->authService->validarPassword('contra')); // Muy corta
-        $this->assertFalse($this->authService->validarPassword('contraseña')); // Sin mayúscula ni números
-        $this->assertFalse($this->authService->validarPassword('CONTRASEÑA1')); // Sin minúscula
-        $this->assertFalse($this->authService->validarPassword('Contraseña1')); // Sin símbolo
-    }
-    
-    public function testAutenticacionFallidaPorCredencialesInvalidas()
-    {
-        // Configurar datos de prueba
-        $rutValido = '12345678-9';
-        $passwordInvalido = 'password';
-        
-        // Mock de la consulta a la base de datos (sin resultados)
-        $mockStatement = $this->createMock(\PDOStatement::class);
+        // Configurar mock para fallo
+        $mockStatement = $this->createMock(PDOStatement::class);
         $mockStatement->method('rowCount')->willReturn(0);
         
-        $this->mockConn->method('prepare')->willReturn($mockStatement);
+        $mockStatement->expects($this->exactly(2))
+                     ->method('bindParam')
+                     ->willReturnCallback(function($param, $value) {
+                         static $callCount = 0;
+                         $callCount++;
+                         
+                         if ($callCount === 1) {
+                             $this->assertEquals(':rut', $param);
+                             $this->assertEquals('99999999-9', $value);
+                         } elseif ($callCount === 2) {
+                             $this->assertEquals(':password', $param);
+                             $this->assertEquals('incorrecto', $value);
+                         }
+                         
+                         return true;
+                     });
         
-        // Ejecutar la autenticación
-        $resultado = $this->authService->autenticarUsuario($rutValido, $passwordInvalido);
+        $mockStatement->expects($this->once())
+                     ->method('execute');
+        
+        $this->mockPdo->expects($this->once())
+                     ->method('prepare')
+                     ->willReturn($mockStatement);
+        
+        // Ejecutar autenticación
+        $result = $this->authService->authenticate('99999999-9', 'incorrecto');
         
         // Verificaciones
-        $this->assertArrayHasKey('error', $resultado);
-        $this->assertEquals('Usuario o contraseña incorrectos.', $resultado['error']);
+        $this->assertFalse($result);
+        $this->assertArrayNotHasKey('rut', $_SESSION);
+    }
+    
+    public function testInicioSesionConExcepcion()
+    {
+        // Configurar mock para lanzar excepción
+        $this->mockPdo->expects($this->once())
+                     ->method('prepare')
+                     ->willThrowException(new \PDOException('Error de base de datos'));
+        
+        // Verificar que se lanza la excepción
+        $this->expectException(\PDOException::class);
+        $this->expectExceptionMessage('Error de base de datos');
+        
+        $this->authService->authenticate('12345678-9', 'Passw0rd!');
+    }
+    
+    protected function tearDown(): void
+    {
+        // Limpiar después de cada prueba
+        $_SESSION = [];
     }
 }
-?>

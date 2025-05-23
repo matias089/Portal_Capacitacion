@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="vendor/autoload.php"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
          colors="true"
-         verbose="true"
-         stopOnFailure="false">
+         testdox="true">
          
     <testsuites>
-        <testsuite name="Pruebas de Validación de Usuario">
-            <directory suffix="inicioSesionExitosa.php">./tests</directory>
+        <testsuite name="Portal Capacitacion Tests">
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
 
-    <coverage processUncoveredFiles="true">
+    <source>
         <include>
-            <directory>./</directory>
+            <directory>src</directory>
         </include>
-    </coverage>
+    </source>
 </phpunit>
