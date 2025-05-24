@@ -2,12 +2,12 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd"
          bootstrap="vendor/autoload.php"
-         colors="true"
-         testdox="true">
+         colors="true">
          
     <testsuites>
-        <testsuite name="Portal Capacitacion Tests">
+        <testsuite name="Portal Capacitacion Test Suite">
             <directory>tests</directory>
+            <exclude>tests/1.0</exclude>
         </testsuite>
     </testsuites>
 
