@@ -50,7 +50,7 @@ class AC_TC_07_RutSinGuion extends TestCase
     
     public function testValidacionRutSinGuion()
     {
-        $result = $this->authService->validateRut('123456789');
+        $result = $this->authService->validateRut('15330771-7');
         $this->assertEquals('El RUT debe contener un guión antes del dígito verificador', $result);
     }
     
@@ -59,3 +59,5 @@ class AC_TC_07_RutSinGuion extends TestCase
         $_SESSION = [];
     }
 }
+
+# prueba con inconsistencia de datos

@@ -26,12 +26,12 @@ class AC_TC_20_ContrasenaSinCaracterEspecial extends TestCase
         $this->mockPdo->expects($this->never())->method('prepare');
         
         // Validar directamente la contraseña
-        $result = $this->authService->validatePassword('Password123');
+        $result = $this->authService->validatePassword('Password1');
         
         $this->assertEquals('La contraseña debe contener al menos un carácter especial', $result);
         
         // Ahora probamos el método authenticate con un RUT válido
-        $result = $this->authService->authenticate('12345678-5', 'Password123');
+        $result = $this->authService->authenticate('12345678-5', 'Password1');
         
         $this->assertIsArray($result);
         $this->assertArrayHasKey('error', $result);

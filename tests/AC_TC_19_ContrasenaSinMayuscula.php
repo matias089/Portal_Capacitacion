@@ -21,7 +21,7 @@ class AC_TC_19_ContrasenaSinMayuscula extends TestCase
         $_SESSION = [];
     }
     
-    public function testInicioSesionFallidoSinMayuscula()
+    public function tetInicioSesionFallidoSinMayuscula()
     {
         $this->mockPdo->expects($this->never())->method('prepare');
         
