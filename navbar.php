@@ -66,7 +66,7 @@ if ($empresa_usuario == 'Savisa') {
                 </li>
                 <?php endif; ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Portal_Capacitacion/cursos_aprobados.php">Ver Cursos</a>
+                    <a class="nav-link" href="/Portal_Capacitacion/cursos_aprobados.php">Historial de cursos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/Portal_Capacitacion/logout.php">Cerrar Sesión</a>

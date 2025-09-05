@@ -1,1 +1,10 @@
 ErrorDocument 404 /Portal_Capacitacion/404.php
+
+RewriteEngine On
+
+# Evita redirigir si el archivo o directorio existe
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirige URLs sin extensión a su equivalente .php
+RewriteRule ^([a-zA-Z0-9_-]+)$ $1.php [L]
